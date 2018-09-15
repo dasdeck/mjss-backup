@@ -3,32 +3,28 @@ const { isObject } = require('lodash');
 module.exports = class Exp {
 
     onCreate(rule) {
-        if (rule.key) {
+        if (rule.parent) {
             if (rule.key === '@env') {
                 this.env = rule;
                 rule.process = function() {};
-            } else if (isEvaluable(rule.key)) {
-                rule._key = rule.key;
-                Object.defineProperty(rule, 'key', { get: createExpression(rule.key, this.getContext()) });
-
-            }
-
-            if (rule.value && isEvaluable(rule.value)) {
-                rule._value = rule.value;
-                Object.defineProperty(rule, 'value', { get: createExpression(rule.value, this.getContext()) });
+            } else  {
+                const context = this.getContext();
+                setExpression(rule, 'key', context);
+                setExpression(rule, 'value', context);
             }
         }
 
     }
 
-    onProcess(rule, renderInfo) {
-        const key = rule.key;
-        const parentKey = renderInfo && renderInfo.rule && renderInfo.rule.key;
+    onProcess(renderInfo) {
 
-        if (parentKey === false) {
-            renderInfo.children = [];
+        const rule = renderInfo.rule;
+        const key = rule.key;
+
+        if (key === false) {
+            delete renderInfo.children;
         } else if (isObject(key)) {
-            rule.key.processChildren(renderInfo);
+            rule.key.processChildren(renderInfo.parent);
         }
     }
 
@@ -45,6 +41,14 @@ module.exports = class Exp {
     }
 
 };
+
+function setExpression(rule, key, context) {
+    const value = rule[key];
+    if (value && isEvaluable(value)) {
+        rule[`_exp_${key}`] = value;
+        Object.defineProperty(rule, key, { get: createExpression(value, context) });
+    }
+}
 
 function isEvaluable(str) {
     return isExpression(str) || isTemplate(str);

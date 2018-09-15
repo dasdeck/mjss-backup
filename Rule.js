@@ -32,25 +32,27 @@ module.exports = class Rule {
         }
     }
 
-    process(parentRenderInfo) {
+    process(parentRenderInfo = null) {
 
         const renderInfo = createRenderInfo(this, parentRenderInfo);
-        parentRenderInfo.children.push(renderInfo);
-
-        this.processChildren(renderInfo);
+        parentRenderInfo && parentRenderInfo.children.push(renderInfo);
 
         for (let i = 0; i < this.options.plugins.length; i++) {
             const plugin = this.options.plugins[i];
-            plugin.onProcess(this, parentRenderInfo);
+            plugin.onProcess(renderInfo);
         }
+
+        if (renderInfo.children) {
+            this.processChildren(renderInfo);
+
+        }
+
+
+        return renderInfo;
     }
 
     toString() {
-
-        const renderInfo = createRenderInfo();
-        this.process(renderInfo);
-        return renderInfo.toString();
-
+        return this.process().toString();
     }
 };
 
@@ -58,21 +60,23 @@ function createRenderInfo(rule, parent = null) {
     return parent && parent.rule === this ? parent : {
         parent,
         rule,
+        key: rule.key,
+        value: rule.value,
         children: [],
 
         toString() {
-            if (this.children.length) { //render container rules (root, media, nested)
+            if (this.children && this.children.length) { //render container rules (root, media, nested)
 
                 const ruleContent = this.children.map(info => info.toString()).join('');
 
-                if (this.rule && isString(this.rule.key)) {
-                    return `${this.rule.key}{${ruleContent}}`;
+                if (this.rule && isString(this.key)) {
+                    return `${this.key}{${ruleContent}}`;
                 } else {
                     return ruleContent;
                 }
 
-            } else if (!isUndefined(this.rule.value)) { //render end-rule or nothing if node is "empty"
-                return `${this.rule.key}:${this.rule.value};`;
+            } else if (!isUndefined(this.value)) { //render end-rule or nothing if node is "empty"
+                return `${this.key}:${this.value};`;
             }
         }
     };
