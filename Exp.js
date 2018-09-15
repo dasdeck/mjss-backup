@@ -6,7 +6,7 @@ module.exports = class Exp {
         if (rule.parent) {
             if (rule.key === '@env') {
                 this.env = rule;
-                rule.process = function() {};
+                rule.render = function() {};
             } else  {
                 const context = this.getContext();
                 setExpression(rule, 'key', context);
@@ -16,15 +16,15 @@ module.exports = class Exp {
 
     }
 
-    onProcess(renderInfo) {
+    onProcess(renderer) {
 
-        const rule = renderInfo.rule;
+        const rule = renderer.rule;
         const key = rule.key;
 
         if (key === false) {
-            delete renderInfo.children;
+            delete renderer.children;
         } else if (isObject(key)) {
-            rule.key.processChildren(renderInfo.parent);
+            rule.key.rednerChildren(renderer.parent);
         }
     }
 

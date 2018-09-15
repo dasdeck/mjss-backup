@@ -22,7 +22,7 @@ module.exports = class Nest {
 
     }
 
-}
+};
 
 function isContainer(renderInfo) {
     return !renderInfo.parent || !renderInfo.rule.parent || renderInfo.rule.key.indexOf('@media') === 0;

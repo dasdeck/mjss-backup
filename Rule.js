@@ -1,5 +1,5 @@
-const {isString, isUndefined, isArray, isObject, mapValues, forEach, size } = require('lodash');
-
+const {isArray, isObject, mapValues, size } = require('lodash');
+const Renderer = require('./Renderer');
 module.exports = class Rule {
 
     constructor(options, data, key, parent) {
@@ -23,61 +23,30 @@ module.exports = class Rule {
 
     }
 
-    processChildren(renderInfo) {
-        if (this.rules) {
+    rednerChildren(renderer) {
+        if (renderer.children && this.rules) {
             for (const key in this.rules) {
                 const rule = this.rules[key];
-                rule.process(renderInfo);
+                rule.render(renderer);
             }
         }
     }
 
-    process(parentRenderInfo = null) {
+    render(parentRenderer = null) {
 
-        const renderInfo = createRenderInfo(this, parentRenderInfo);
-        parentRenderInfo && parentRenderInfo.children.push(renderInfo);
+        const renderer = new Renderer(this, parentRenderer);
 
         for (let i = 0; i < this.options.plugins.length; i++) {
             const plugin = this.options.plugins[i];
-            plugin.onProcess(renderInfo);
+            plugin.onProcess(renderer);
         }
 
-        if (renderInfo.children) {
-            this.processChildren(renderInfo);
+        this.rednerChildren(renderer);
 
-        }
-
-
-        return renderInfo;
+        return renderer;
     }
 
     toString() {
-        return this.process().toString();
+        return this.render().toString();
     }
 };
-
-function createRenderInfo(rule, parent = null) {
-    return parent && parent.rule === this ? parent : {
-        parent,
-        rule,
-        key: rule.key,
-        value: rule.value,
-        children: [],
-
-        toString() {
-            if (this.children && this.children.length) { //render container rules (root, media, nested)
-
-                const ruleContent = this.children.map(info => info.toString()).join('');
-
-                if (this.rule && isString(this.key)) {
-                    return `${this.key}{${ruleContent}}`;
-                } else {
-                    return ruleContent;
-                }
-
-            } else if (!isUndefined(this.value)) { //render end-rule or nothing if node is "empty"
-                return `${this.key}:${this.value};`;
-            }
-        }
-    };
-}

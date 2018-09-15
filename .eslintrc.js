@@ -11,6 +11,9 @@ module.exports = {
             "error",
             4
         ],
+        "no-unused-vars": [
+            "error"
+        ],
         "linebreak-style": [
             "error",
             "unix"
