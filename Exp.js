@@ -1,6 +1,23 @@
-const { isObject } = require('lodash');
 
+class MixinCall {
+    constructor(rule, args, exp) {
+        this.exp = exp;
+        this.rule = rule;
+        this.args = args;
+    }
+
+    render(renderer) {
+        this.exp.stack.push(this.args);
+        this.rule.rednerChildren(renderer);
+        this.exp.stack.pop();
+
+    }
+};
 module.exports = class Exp {
+
+    constructor() {
+        this.stack = [];
+    }
 
     onCreate(rule) {
         if (rule.parent) {
@@ -23,19 +40,22 @@ module.exports = class Exp {
 
         if (key === false) {
             delete renderer.children;
-        } else if (isObject(key)) {
-            rule.key.rednerChildren(renderer.parent);
+        } else if (key instanceof MixinCall) {
+            key.render(renderer.parent);
         }
     }
 
     getContext() {
         const self = this;
         return {
+            arg(name) {
+                return self.stack[self.stack.length - 1][name];
+            },
             env(name) {
                 return self.env.rules[name].value;
             },
             call(name, args = {}) {
-                return self.env.rules[name];
+                return new MixinCall(self.env.rules[name], args, self);
             }
         };
     }

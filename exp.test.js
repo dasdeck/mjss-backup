@@ -94,6 +94,20 @@ const options = {
             }
         },
         css: '.class{width:10px;}'
+    },
+    {
+        desc: 'mixin with params',
+        jss: {
+            '@env': {
+                mixin: {
+                    color: "/arg('color')/"
+                },
+            },
+            '.class': {
+                "/call('mixin', {color: 'red'})/": {}
+            }
+        },
+        css: '.class{color:red;}'
     }
 ].forEach(row => {
 
