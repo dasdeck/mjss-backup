@@ -9,13 +9,23 @@ class MixinCall {
     render(renderer) {
         this.exp.stack.push(this.args);
         this.rule.rednerChildren(renderer);
+
+        if (this.exp.options.forceUniqueKeys) {
+            renderer.children = Object.values(renderer.children.reduce((last, next) => {
+
+                last[next.key] = next;
+                return last;
+            }, {}));
+        }
+
         this.exp.stack.pop();
 
     }
 };
 module.exports = class Exp {
 
-    constructor() {
+    constructor(options = {forceUniqueKeys: false}) {
+        this.options = options;
         this.stack = [];
     }
 

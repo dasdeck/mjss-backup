@@ -4,12 +4,6 @@
 const Rule = require('./Rule');
 const Exp = require('./Exp');
 
-const options = {
-    plugins: [
-        new Exp
-    ]
-};
-
 [
     {
         desc: 'template key name',
@@ -108,11 +102,43 @@ const options = {
             }
         },
         css: '.class{color:red;}'
+    },
+    {
+        desc: 'test unique keys',
+        opts: {forceUniqueKeys: true},
+        jss: {
+            '@env': {
+                mixin: {
+                    color: "/arg('color')/"
+                },
+            },
+            '.class': {
+                "/call('mixin', {color: 'red'})/": {},
+                "/call('mixin', {color: 'blue'})/": {}
+            }
+        },
+        css: '.class{color:blue;}'
+    },
+    {
+        desc: 'test double keys',
+        jss: {
+            '@env': {
+                mixin: {
+                    color: "/arg('color')/"
+                },
+            },
+            '.class': {
+                "/call('mixin', {color: 'red'})/": {},
+                "/call('mixin', {color: 'blue'})/": {}
+            }
+        },
+        css: '.class{color:red;color:blue;}'
     }
 ].forEach(row => {
 
     test(row.desc || row.css, () => {
 
+        const options =  {plugins: [new Exp(row.opts)]};
         const rule = new Rule(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 
