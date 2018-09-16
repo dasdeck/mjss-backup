@@ -1,16 +1,19 @@
+import ContainerRuleRenderer from "../ContainerRuleRenderer";
+
 export default class Nest {
 
-    onProcess(renderInfo) {
+    onProcess(renderer:ContainerRuleRenderer) {
 
-        if (renderInfo.rule.rules) {
+        if (renderer.rule.rules) {
 
-            while (renderInfo.parent && !isContainer(renderInfo.parent)) {
+            while (renderer.parent && !isContainer(renderer.parent)) {
 
-                renderInfo.key = `${renderInfo.parent.key} ${renderInfo.key}`;
-                renderInfo = renderInfo.parent.children.pop();
-                renderInfo.parent = renderInfo.parent.parent;
+                debugger
+                renderer.key = `${renderer.parent.key} ${renderer.key}`;
+                renderer = renderer.parent.children.pop();
+                renderer.parent = renderer.parent.parent;
 
-                renderInfo.parent.children.push(renderInfo);
+                renderer.parent.children.push(renderer);
 
             }
         }
@@ -18,6 +21,6 @@ export default class Nest {
 
 };
 
-function isContainer(renderInfo) {
-    return !renderInfo.parent || !renderInfo.rule.parent || renderInfo.rule.key.indexOf('@media') === 0;
+function isContainer(renderer:ContainerRuleRenderer) {
+    return !renderer.parent || !renderer.rule.parent || renderer.rule.key.indexOf('@media') === 0;
 }

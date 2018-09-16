@@ -1,5 +1,7 @@
 import {startsWith} from 'lodash';
 import Rule from '../Rule';
+import Renderer from '../interface/Renderer';
+import ContainerRuleRenderer from '../ContainerRuleRenderer';
 
 const lookup = '@extend ';
 
@@ -19,12 +21,12 @@ class ExtendRule extends Rule {
         this.search = new RegExp(/prefix(?:\b)search(?:\b[^-]|$)/g.source.replace('prefix', prefix).replace('search', search));
 
     }
-    render() {}
+
+    render(r:ContainerRuleRenderer):Renderer { return ''}
 
     apply(renderer) {
 
         if (renderer.key && renderer.key.match(this.search)) {
-            debugger
             const selectors = renderer.key.split(', ');
             const selectorToAdd = this.parent.key;
             if (this.value.all) {

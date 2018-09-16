@@ -16,7 +16,7 @@ class MixinCall {
 
     render(renderer) {
         this.exp.stack.push(this.args);
-        this.rule.rules.rednerChildren(renderer);
+        this.rule.rules.render(renderer);
         renderer._exp_composed = true;
         this.exp.stack.pop();
 
@@ -34,6 +34,8 @@ class DynamicRule extends ContainerRule {
         const key = this.key;
         if (key instanceof MixinCall) {
             key.render(renderer);
+        } else if (key === true) {
+            return this.rules.render(renderer);
         } else if (key !== false) {
             return super.render(renderer);
         }

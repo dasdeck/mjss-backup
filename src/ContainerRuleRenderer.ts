@@ -6,7 +6,7 @@ import Sheet from './Sheet';
 export default class ContainerRuleRenderer implements Renderer {
 
     rule: ContainerRule
-    parent: Renderer
+    parent: ContainerRuleRenderer
     key: any
     value: any
     children: Array<Renderer>
@@ -32,15 +32,10 @@ export default class ContainerRuleRenderer implements Renderer {
 
         this.sheet.hook('onOutput', this);
 
-        if (this.children && this.children.length) { // render container rules (root, media, nested)
+        if (this.children.length) { // render container rules (root, media, nested)
 
             const ruleContent = this.children.map(info => info.toString()).join('');
-
-            if (this.rule && isString(this.key)) {
-                return `${this.key}{${ruleContent}}`;
-            } else {
-                return ruleContent;
-            }
+            return `${this.key}{${ruleContent}}`;
 
         }
     }

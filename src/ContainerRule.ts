@@ -19,7 +19,7 @@ export default class ContainerRule extends Rule {
 
         this.sheet.hook('onProcess', renderer);
 
-        this.rules.rednerChildren(renderer);
+        this.rules.render(renderer);
 
         return renderer;
     }
