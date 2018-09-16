@@ -4,7 +4,7 @@ module.exports = class Nest {
 
         if (renderInfo.rule.rules) {
 
-            while (renderInfo && renderInfo.parent && !isContainer(renderInfo.parent)) {
+            while (renderInfo.parent && !isContainer(renderInfo.parent)) {
 
                 renderInfo.key = `${renderInfo.parent.key} ${renderInfo.key}`;
                 renderInfo = renderInfo.parent.children.pop();
@@ -14,7 +14,6 @@ module.exports = class Nest {
 
             }
         }
-
     }
 
 };

@@ -1,4 +1,4 @@
-
+const Rule = require('../Rule');
 class MixinCall {
 
     constructor(rule, args, exp) {
@@ -10,7 +10,7 @@ class MixinCall {
     render(renderer) {
         this.exp.stack.push(this.args);
         this.rule.rednerChildren(renderer);
-
+        renderer._exp_composed = true;
         this.exp.stack.pop();
 
     }
@@ -21,18 +21,24 @@ module.exports = class Exp {
     constructor(options = {forceUniqueKeys: false}) {
         this.options = options;
         this.stack = [];
+
+        if (this.options.forceUniqueKeys) {
+            this.onOutput = this.forceUniqueKeys;
+        }
+    }
+
+    createRule(options, rules, key) {
+        if (key === '@env') {
+            this.env = new Rule.Muted(...arguments);
+            return this.env;
+        }
     }
 
     onCreate(rule) {
-        if (rule.parent) {
-            if (rule.key === '@env') {
-                this.env = rule;
-                rule.render = function() {};
-            } else {
-                const context = this.getContext();
-                setExpression(rule, 'key', context);
-                setExpression(rule, 'value', context);
-            }
+        if (rule.parent) { //skip root rule
+            const context = this.getContext();
+            setExpression(rule, 'key', context);
+            setExpression(rule, 'value', context);
         }
     }
 
@@ -49,11 +55,11 @@ module.exports = class Exp {
         }
     }
 
-    onOutput(renderer) {
-        if (this.options.forceUniqueKeys) {
+    forceUniqueKeys(renderer) {
+        if (renderer._exp_composed) {
             let i = 0;
             renderer.children = Object.values(renderer.children.reduce((last, next) => {
-                const key = next.children.length ? i++ : next.key;
+                const key = next.children && next.children.length ? i++ : next.key;
                 last[key] = next;
                 return last;
             }, {}));

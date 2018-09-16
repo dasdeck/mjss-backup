@@ -1,6 +1,6 @@
 const {isArray, isObject, mapValues, size} = require('lodash');
 const Renderer = require('./Renderer');
-module.exports = class Rule {
+class Rule {
 
     constructor(options, data, key, parent) {
 
@@ -14,18 +14,27 @@ module.exports = class Rule {
         } else if (isArray(data)) {
             this.args = data;
         } else if (size(data)) {
-            this.rules = mapValues(data, (row, key) => new Rule(options, row, key, this));
+            this.rules = mapValues(data, (row, key) => this.createRule(row, key));
         }
 
         this.hook('onCreate', this);
 
     }
 
+    createRule(data, key) {
+
+        const rule = this.hook('createRule', this.options, data, key, this);
+        return rule || new Rule(this.options, data, key, this);
+    }
+
     hook(name, ...args) {
 
         for(let i = 0; i < this.options.plugins.length; i++) {
             const plugin = this.options.plugins[i];
-            plugin[name] && plugin[name](...args);
+            const res = plugin[name] && plugin[name](...args);
+            if (res) {
+                return res;
+            }
         }
     }
 
@@ -52,4 +61,13 @@ module.exports = class Rule {
     toString() {
         return this.render().toString();
     }
-};
+}
+
+class Muted extends Rule {
+    render() {
+
+    }
+}
+Rule.Muted = Muted;
+
+module.exports = Rule;
