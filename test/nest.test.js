@@ -51,7 +51,6 @@ const Nest = require('../src/plugins/Nest');
         };
 
         const rule = new Rule(options, row.jss);
-        debugger
         expect(rule.toString()).toBe(row.css);
 
     });

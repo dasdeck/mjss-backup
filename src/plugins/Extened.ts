@@ -1,11 +1,14 @@
-const {startsWith} = require('lodash');
-const Rule = require('../Rule');
+import {startsWith} from 'lodash';
+import PropertyRule from '../PropertyRule';
 
 const lookup = '@extend ';
 
 /* extend may fail if the parent key is changed dynamically
 by another plugin (Exp will work fine though) */
-class ExtendRule extends Rule.Muted {
+class ExtendRule extends PropertyRule {
+
+    className: string
+    search: RegExp
 
     constructor(...args) {
         super(...args);
@@ -16,6 +19,7 @@ class ExtendRule extends Rule.Muted {
         this.search = new RegExp(/prefix(?:\b)search(?:\b[^-]|$)/g.source.replace('prefix', prefix).replace('search', search));
 
     }
+    render() {}
 
     apply(renderer) {
 

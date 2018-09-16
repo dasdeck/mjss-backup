@@ -70,7 +70,6 @@ module.exports = class Exp {
         const self = this;
         return {
             arg(name) {
-                debugger
                 return self.stack[self.stack.length - 1][name];
             },
             env(name) {

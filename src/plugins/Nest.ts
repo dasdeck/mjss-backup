@@ -1,4 +1,4 @@
-module.exports = class Nest {
+export default class Nest {
 
     onProcess(renderInfo) {
 

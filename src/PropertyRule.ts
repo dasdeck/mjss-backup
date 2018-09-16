@@ -3,6 +3,8 @@ const Renderer = require('./Renderer');
 
 class Rule {
 
+    options: any
+
     hook(name, ...args) {
 
         for (let i = 0; i < this.options.plugins.length; i++) {
@@ -15,6 +17,10 @@ class Rule {
     }
 }
 class PropertyRule extends Rule {
+
+    key: any
+    value: any
+
 
     constructor(options, value, key, parent) {
 
