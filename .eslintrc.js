@@ -6,10 +6,14 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": 6
     },
+    "extends": "eslint:recommended",
     "rules": {
         "indent": [
             "error",
             4
+        ],
+        "no-multi-spaces": [
+            "error"
         ],
         "no-unused-vars": [
             "error"

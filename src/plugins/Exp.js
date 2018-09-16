@@ -14,7 +14,7 @@ class MixinCall {
         this.exp.stack.pop();
 
     }
-};
+}
 
 module.exports = class Exp {
 
@@ -28,7 +28,7 @@ module.exports = class Exp {
             if (rule.key === '@env') {
                 this.env = rule;
                 rule.render = function() {};
-            } else  {
+            } else {
                 const context = this.getContext();
                 setExpression(rule, 'key', context);
                 setExpression(rule, 'value', context);
@@ -79,7 +79,7 @@ module.exports = class Exp {
 
 function setExpression(rule, key, context) {
     const value = rule[key];
-    if (value && isEvaluable(value)) {
+    if (value && isEvaluable(value)) {
         rule[`_exp_${key}`] = value;
         Object.defineProperty(rule, key, { get: createExpression(value, context) });
     }

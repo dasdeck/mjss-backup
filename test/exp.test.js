@@ -139,7 +139,7 @@ const Exp = require('../src/plugins/Exp');
 
     test(row.desc || row.css, () => {
 
-        const options =  {plugins: [new Exp(row.opts)]};
+        const options = {plugins: [new Exp(row.opts)]};
         const rule = new Rule(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 
