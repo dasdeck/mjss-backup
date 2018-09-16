@@ -7,7 +7,7 @@ import RuleList from './RuleList';
 export default class RuleListRenderer implements Renderer {
 
     list: RuleList
-    parent: RuleListRenderer
+    parent: RuleListRenderer|any
     children: Array<Renderer>
     sheet: Sheet
 

@@ -1,4 +1,5 @@
 import ContainerRuleRenderer from "../ContainerRuleRenderer";
+import RuleListRenderer from "../RuleListRenderer";
 
 export default class Nest {
 
@@ -8,7 +9,6 @@ export default class Nest {
 
             while (renderer.parent && !isContainer(renderer.parent)) {
 
-                debugger
                 renderer.key = `${renderer.parent.key} ${renderer.key}`;
                 renderer = renderer.parent.children.pop();
                 renderer.parent = renderer.parent.parent;
@@ -21,6 +21,10 @@ export default class Nest {
 
 };
 
-function isContainer(renderer:ContainerRuleRenderer) {
-    return !renderer.parent || !renderer.rule.parent || renderer.rule.key.indexOf('@media') === 0;
+function isContainer(renderer:RuleListRenderer) {
+    if (!renderer.parent) {
+        return true;
+    } else if (renderer instanceof ContainerRuleRenderer) {
+        return !renderer.rule.parent || renderer.rule.key.indexOf('@media') === 0;
+    }
 }

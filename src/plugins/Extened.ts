@@ -22,7 +22,7 @@ class ExtendRule extends Rule {
 
     }
 
-    render(r:ContainerRuleRenderer):Renderer { return ''}
+    render(r:ContainerRuleRenderer) { return ''}
 
     apply(renderer) {
 

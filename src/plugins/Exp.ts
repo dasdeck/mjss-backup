@@ -24,20 +24,20 @@ class MixinCall {
 }
 
 class EnvRule extends ContainerRule {
-    render(renderer: ContainerRuleRenderer):Renderer {
+    render(renderer: ContainerRuleRenderer) {
         return '';
     }
 }
 
 class DynamicRule extends ContainerRule {
-    render(renderer: ContainerRuleRenderer):Renderer {
+    render(renderer: ContainerRuleRenderer) {
         const key = this.key;
         if (key instanceof MixinCall) {
             key.render(renderer);
         } else if (key === true) {
-            return this.rules.render(renderer);
+            this.rules.render(renderer);
         } else if (key !== false) {
-            return super.render(renderer);
+            super.render(renderer);
         }
     }
 }

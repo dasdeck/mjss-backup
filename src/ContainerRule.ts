@@ -1,7 +1,7 @@
-import Renderer from './interface/Renderer';
 import Rule from './Rule';
 import ContainerRuleRenderer from './ContainerRuleRenderer';
 import RuleList from './RuleList';
+import RuleListRenderer from './RuleListRenderer';
 export default class ContainerRule extends Rule {
 
     rules: RuleList
@@ -13,7 +13,7 @@ export default class ContainerRule extends Rule {
 
     }
 
-    render(parentRenderer:ContainerRuleRenderer = null):Renderer {
+    render(parentRenderer:RuleListRenderer) {
 
         const renderer = new ContainerRuleRenderer(this, parentRenderer);
 
@@ -21,12 +21,6 @@ export default class ContainerRule extends Rule {
 
         this.rules.render(renderer);
 
-        return renderer;
     }
-
-    toString() {
-        return this.render().toString();
-    }
-
 
 }

@@ -1,9 +1,7 @@
 
 
-import Renderer from './interface/Renderer';
-import RuleList from './RuleList';
 import Sheet from './Sheet';
-import ContainerRuleRenderer from './ContainerRuleRenderer';
+import RuleListRenderer from './RuleListRenderer';
 
 export default class Rule {
 
@@ -24,8 +22,7 @@ export default class Rule {
 
     }
 
-    render(renderer: ContainerRuleRenderer):Renderer {
+    render(renderer: RuleListRenderer) {
         const res = `${this.key}:${this.value};`;
         renderer.children.push(res);
-        return res;
     }}

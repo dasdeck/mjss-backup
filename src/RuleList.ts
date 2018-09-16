@@ -2,7 +2,7 @@ import {isArray, isObject, mapValues, size} from 'lodash';
 import ContainerRule from './ContainerRule';
 import Sheet from './Sheet';
 import Rule from './Rule';
-import ContainerRuleRenderer from './ContainerRuleRenderer';
+import RuleListRenderer from './RuleListRenderer';
 import Renderer from './interface/Renderer';
 
 export default class RuleList {
@@ -35,13 +35,12 @@ export default class RuleList {
         return rule;
     }
 
-    render(renderer:ContainerRuleRenderer):Renderer {
-        if (renderer.children) {
-            for (const key in this.rules) {
-                const rule = this.rules[key];
-                rule.render(renderer);
-            }
+    render(renderer:RuleListRenderer) {
+        for (const key in this.rules) {
+            const rule = this.rules[key];
+            rule.render(renderer);
         }
+        return renderer;
     }
 
 
