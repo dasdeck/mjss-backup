@@ -1,4 +1,5 @@
 import RuleList from './RuleList';
+import ContainerRule from './ContainerRule';
 
 export default class Sheet {
 
@@ -22,8 +23,9 @@ export default class Sheet {
     }
 
     toString() {
-        const list = new RuleList(this);
-        return list.toString();
+        const root = new ContainerRule(this, this.data);
+        return root.toString();
     }
+
 }
 

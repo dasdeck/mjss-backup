@@ -2,7 +2,7 @@ import {isArray, isObject, mapValues, size} from 'lodash';
 import ContainerRule from './ContainerRule';
 import Sheet from './Sheet';
 import Rule from './Rule';
-import RuleListRenderer from './RuleListRenderer';
+import ContainerRuleRenderer from './ContainerRuleRenderer';
 
 export default class RuleList {
 
@@ -18,7 +18,6 @@ export default class RuleList {
         this.rules = mapValues(data, (row, key) => this.createRule(row, key));
 
         this.sheet.hook('onCreate', this);
-
 
     }
 
@@ -44,18 +43,5 @@ export default class RuleList {
         }
     }
 
-    render(parentRenderer:RuleListRenderer = null) {
 
-        const renderer = new RuleListRenderer(this, parentRenderer);
-
-        this.sheet.hook('onProcess', renderer);
-
-        this.rednerChildren(renderer);
-
-        return renderer;
-    }
-
-    toString() {
-        return this.render().toString();
-    }
 }

@@ -1,11 +1,9 @@
-import Renderer from './Renderer';
-import ContainerRule from './RuleList';
+import Renderer from './interface/Renderer';
+import ContainerRule from './ContainerRule';
 import {isString} from 'lodash';
-import RuleList from './RuleList';
 import Sheet from './Sheet';
-import Rule from './Rule';
 
-export default class RuleListRenderer implements Renderer {
+export default class ContainerRuleRenderer implements Renderer {
 
     rule: ContainerRule
     parent: Renderer
@@ -14,15 +12,14 @@ export default class RuleListRenderer implements Renderer {
     children: Array<Renderer>
     sheet: Sheet
 
-    constructor(list: RuleList, parent: RuleListRenderer = null) {
+    constructor(rule: ContainerRule, parent: ContainerRuleRenderer = null) {
 
-        const rule: Rule = list.rule;
         Object.assign(this, {
-            sheet: list.sheet,
+            sheet: rule.rules.sheet,
             parent,
             rule,
-            key: rule && rule.key,
-            value: rule && rule.value,
+            key: rule.key,
+            value: rule.value,
             children: []
         });
 

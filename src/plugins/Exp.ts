@@ -1,6 +1,6 @@
 import ContainerRule from '../ContainerRule';
-import Renderer from '../Renderer';
-import RuleListRenderer from '../RuleListRenderer';
+import Renderer from '../interface/Renderer';
+import ContainerRuleRenderer from '../ContainerRuleRenderer';
 import {values} from 'lodash';
 class MixinCall {
 
@@ -24,7 +24,7 @@ class MixinCall {
 }
 
 class EnvRule extends ContainerRule {
-    render(renderer: RuleListRenderer):Renderer {
+    render(renderer: ContainerRuleRenderer):Renderer {
         return '';
     }
 }
