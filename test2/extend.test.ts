@@ -1,7 +1,7 @@
 
 /* eslint-env jest */
 
-import Rule from '../src/Rule';
+import Sheet from '../src/Sheet';
 import Extend from '../src/plugins/Extened';
 
 
@@ -47,7 +47,7 @@ import Extend from '../src/plugins/Extened';
         const options = {
             plugins: [new Extend]
         };
-        const rule = new Rule(options, row.jss);
+        const rule = new Sheet(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 
     });

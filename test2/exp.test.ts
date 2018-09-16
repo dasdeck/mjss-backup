@@ -139,7 +139,6 @@ import Exp from '../src/plugins/Exp';
 
     test(row.desc || row.css, () => {
 
-        debugger;
         const options = {plugins: [new Exp(row.opts)]};
         const rule = new Sheet(options, row.jss);
         expect(rule.toString()).toBe(row.css);

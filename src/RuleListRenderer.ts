@@ -1,22 +1,28 @@
 import Renderer from './Renderer';
-import ContainerRule from './ContainerRule';
+import ContainerRule from './RuleList';
 import {isString} from 'lodash';
+import RuleList from './RuleList';
+import Sheet from './Sheet';
+import Rule from './Rule';
 
-export default class ContainerRuleRenderer implements Renderer {
+export default class RuleListRenderer implements Renderer {
 
     rule: ContainerRule
     parent: Renderer
     key: any
     value: any
     children: Array<Renderer>
+    sheet: Sheet
 
-    constructor(rule: ContainerRule, parent: ContainerRuleRenderer = null) {
+    constructor(list: RuleList, parent: RuleListRenderer = null) {
 
+        const rule: Rule = list.rule;
         Object.assign(this, {
+            sheet: list.sheet,
             parent,
             rule,
-            key: rule.key,
-            value: rule.value,
+            key: rule && rule.key,
+            value: rule && rule.value,
             children: []
         });
 
@@ -27,7 +33,7 @@ export default class ContainerRuleRenderer implements Renderer {
 
     toString() {
 
-        this.rule.hook('onOutput', this);
+        this.sheet.hook('onOutput', this);
 
         if (this.children && this.children.length) { // render container rules (root, media, nested)
 

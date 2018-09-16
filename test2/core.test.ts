@@ -3,8 +3,6 @@
 
 import Sheet from '../src/Sheet';
 
-debugger;
-
 const options = {
     plugins: []
 };
@@ -33,7 +31,6 @@ const options = {
 ].forEach(row => {
 
     test(row.desc || row.css, () => {
-        debugger
         const rule = new Sheet(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 

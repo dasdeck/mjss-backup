@@ -1,21 +1,31 @@
 
 
 import Renderer from './Renderer';
+import RuleList from './RuleList';
+import Sheet from './Sheet';
+import RuleListRenderer from './RuleListRenderer';
 
-export default abstract class Rule {
+export default class Rule {
 
-    abstract options: any
+    sheet: Sheet
+    parent: Rule
 
-    hook(name, ...args) {
+    key: any;
+    value: any;
 
-        for (let i = 0; i < this.options.plugins.length; i++) {
-            const plugin = this.options.plugins[i];
-            const res = plugin[name] && plugin[name](...args);
-            if (res) {
-                return res;
-            }
-        }
+    constructor(sheet, value, key, parent) {
+
+        this.key = key;
+        this.value = value;
+        this.sheet = sheet;
+        this.parent = parent;
+
+        this.sheet.hook('onCreate', this);
+
     }
 
-    public abstract render(renderer: Renderer):Renderer
-}
+    render(renderer: RuleListRenderer):Renderer {
+        const res = `${this.key}:${this.value};`;
+        renderer.children.push(res);
+        return res;
+    }}

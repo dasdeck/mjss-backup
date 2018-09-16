@@ -2,7 +2,7 @@ export default class Nest {
 
     onProcess(renderInfo) {
 
-        if (renderInfo.rule.rules) {
+        if (renderInfo.rule && renderInfo.rule.rules) {
 
             while (renderInfo.parent && !isContainer(renderInfo.parent)) {
 

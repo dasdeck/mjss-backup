@@ -1,5 +1,12 @@
-import Rule from '../Rule';
+import ContainerRule from '../ContainerRule';
+import Renderer from '../Renderer';
+import RuleListRenderer from '../RuleListRenderer';
+import {values} from 'lodash';
 class MixinCall {
+
+    exp: Exp
+    args: Array<any>
+    rule: ContainerRule
 
     constructor(rule, args, exp) {
         this.exp = exp;
@@ -9,14 +16,24 @@ class MixinCall {
 
     render(renderer) {
         this.exp.stack.push(this.args);
-        this.rule.rednerChildren(renderer);
+        this.rule.rules.rednerChildren(renderer);
         renderer._exp_composed = true;
         this.exp.stack.pop();
 
     }
 }
 
+class EnvRule extends ContainerRule {
+    render(renderer: RuleListRenderer):Renderer {
+        return '';
+    }
+}
 export default class Exp {
+
+    stack: Array<any>
+    options: any
+    onOutput: Function
+    env: EnvRule
 
     constructor(options = {forceUniqueKeys: false}) {
         this.options = options;
@@ -27,9 +44,9 @@ export default class Exp {
         }
     }
 
-    createRule(options, rules, key) {
+    createRule(sheet, rules, key) {
         if (key === '@env') {
-            this.env = new Rule.Muted(...arguments);
+            this.env = new EnvRule(sheet, rules, '@env');
             return this.env;
         }
     }
@@ -45,7 +62,7 @@ export default class Exp {
     onProcess(renderer) {
 
         const rule = renderer.rule;
-        const key = rule.key;
+        const key = rule && rule.key;
 
         if (key === false) {
             delete renderer.children;
@@ -58,7 +75,7 @@ export default class Exp {
     forceUniqueKeys(renderer) {
         if (renderer._exp_composed) {
             let i = 0;
-            renderer.children = Object.values(renderer.children.reduce((last, next) => {
+            renderer.children = values(renderer.children.reduce((last, next) => {
                 const key = next.children && next.children.length ? i++ : next.key;
                 last[key] = next;
                 return last;
@@ -73,10 +90,10 @@ export default class Exp {
                 return self.stack[self.stack.length - 1][name];
             },
             env(name) {
-                return self.env.rules[name].value;
+                return self.env.rules.rules[name].value;
             },
             call(name, args = {}) {
-                return new MixinCall(self.env.rules[name], args, self);
+                return new MixinCall(self.env.rules.rules[name], args, self);
             }
         };
     }

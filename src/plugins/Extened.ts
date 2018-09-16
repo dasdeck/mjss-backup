@@ -1,17 +1,17 @@
 import {startsWith} from 'lodash';
-import PropertyRule from '../PropertyRule';
+import Rule from '../Rule';
 
 const lookup = '@extend ';
 
 /* extend may fail if the parent key is changed dynamically
 by another plugin (Exp will work fine though) */
-class ExtendRule extends PropertyRule {
+class ExtendRule extends Rule {
 
     className: string
     search: RegExp
 
-    constructor(...args) {
-        super(...args);
+    constructor(sheet, data, key, parent) {
+        super(sheet, data, key, parent);
         const className = this.key.substr(lookup.length);
         const prefix = className[0] === '.' ? '.' : '';
         const search = className.substr(prefix.length);
@@ -23,10 +23,8 @@ class ExtendRule extends PropertyRule {
 
     apply(renderer) {
 
-        if(!renderer) {
-            debugger
-        }
         if (renderer.key && renderer.key.match(this.search)) {
+            debugger
             const selectors = renderer.key.split(', ');
             const selectorToAdd = this.parent.key;
             if (this.value.all) {
@@ -49,9 +47,9 @@ export default class Extend {
 
     extends: Array<ExtendRule> = []
 
-    createRule(options, rules, key) {
+    createRule(sheet, rules, key, list) {
         if (startsWith(key, lookup)) {
-            const rule = new ExtendRule(...arguments);
+            const rule = new ExtendRule(sheet, rules, key, list.rule);
             this.extends.push(rule);
             return rule;
         }
