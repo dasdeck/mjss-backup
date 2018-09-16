@@ -1,4 +1,4 @@
-const {isArray, isObject, mapValues, size } = require('lodash');
+const {isArray, isObject, mapValues, size} = require('lodash');
 const Renderer = require('./Renderer');
 module.exports = class Rule {
 
@@ -17,10 +17,16 @@ module.exports = class Rule {
             this.rules = mapValues(data, (row, key) => new Rule(options, row, key, this));
         }
 
-        this.options.plugins.forEach(plugin => {
-            plugin.onCreate(this);
-        });
+        this.hook('onCreate', this);
 
+    }
+
+    hook(name, ...args) {
+
+        for(let i = 0; i < this.options.plugins.length; i++) {
+            const plugin = this.options.plugins[i];
+            plugin[name] && plugin[name](...args);
+        }
     }
 
     rednerChildren(renderer) {
@@ -36,10 +42,7 @@ module.exports = class Rule {
 
         const renderer = new Renderer(this, parentRenderer);
 
-        for (let i = 0; i < this.options.plugins.length; i++) {
-            const plugin = this.options.plugins[i];
-            plugin.onProcess(renderer);
-        }
+        this.hook('onProcess', renderer);
 
         this.rednerChildren(renderer);
 

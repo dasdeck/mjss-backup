@@ -1,12 +1,9 @@
 
 /* eslint-env jest */
 
-const Rule = require('./Rule');
-const Nest = require('./Nest');
+const Rule = require('../src/Rule');
+const Nest = require('../src/plugins/Nest');
 
-const options = {
-    plugins: [new Nest]
-};
 
 [
     {
@@ -48,6 +45,11 @@ const options = {
 ].forEach(row => {
 
     test(row.desc || row.css, () => {
+
+        const options = {
+            plugins: [new Nest]
+        };
+
         const rule = new Rule(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 

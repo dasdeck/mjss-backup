@@ -1,8 +1,8 @@
 
 /* eslint-env jest */
 
-const Rule = require('./Rule');
-const Exp = require('./Exp');
+const Rule = require('../src/Rule');
+const Exp = require('../src/plugins/Exp');
 
 [
     {
@@ -114,10 +114,11 @@ const Exp = require('./Exp');
             },
             '.class': {
                 "/call('mixin', {color: 'red'})/": {},
-                "/call('mixin', {color: 'blue'})/": {}
+                "/call('mixin', {color: 'blue'})/": {},
+                color: 'green'
             }
         },
-        css: '.class{color:blue;}'
+        css: '.class{color:green;}'
     },
     {
         desc: 'test double keys',

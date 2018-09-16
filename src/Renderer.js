@@ -1,4 +1,4 @@
-const {isString, isUndefined } = require('lodash');
+const {isString, isUndefined} = require('lodash');
 
 module.exports = class Renderer {
 
@@ -18,6 +18,9 @@ module.exports = class Renderer {
     }
 
     toString() {
+
+        this.rule.hook('onOutput', this);
+
         if (this.children && this.children.length) { //render container rules (root, media, nested)
 
             const ruleContent = this.children.map(info => info.toString()).join('');

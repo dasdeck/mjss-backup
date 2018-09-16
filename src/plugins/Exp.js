@@ -1,5 +1,6 @@
 
 class MixinCall {
+
     constructor(rule, args, exp) {
         this.exp = exp;
         this.rule = rule;
@@ -10,18 +11,11 @@ class MixinCall {
         this.exp.stack.push(this.args);
         this.rule.rednerChildren(renderer);
 
-        if (this.exp.options.forceUniqueKeys) {
-            renderer.children = Object.values(renderer.children.reduce((last, next) => {
-
-                last[next.key] = next;
-                return last;
-            }, {}));
-        }
-
         this.exp.stack.pop();
 
     }
 };
+
 module.exports = class Exp {
 
     constructor(options = {forceUniqueKeys: false}) {
@@ -40,7 +34,6 @@ module.exports = class Exp {
                 setExpression(rule, 'value', context);
             }
         }
-
     }
 
     onProcess(renderer) {
@@ -51,7 +44,19 @@ module.exports = class Exp {
         if (key === false) {
             delete renderer.children;
         } else if (key instanceof MixinCall) {
+            renderer.parent.children.pop();
             key.render(renderer.parent);
+        }
+    }
+
+    onOutput(renderer) {
+        if (this.options.forceUniqueKeys) {
+            let i = 0;
+            renderer.children = Object.values(renderer.children.reduce((last, next) => {
+                const key = next.children.length ? i++ : next.key;
+                last[key] = next;
+                return last;
+            }, {}));
         }
     }
 

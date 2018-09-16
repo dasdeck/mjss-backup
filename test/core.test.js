@@ -1,7 +1,7 @@
 
 /* eslint-env jest */
 
-const Rule = require('./Rule');
+const Rule = require('../src/Rule');
 
 const options = {
     plugins: []
