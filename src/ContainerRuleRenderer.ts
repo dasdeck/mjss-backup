@@ -1,11 +1,18 @@
-const {isString} = require('lodash');
+import Renderer from './Renderer';
+import ContainerRule from './ContainerRule';
+import {isString} from 'lodash';
 
-module.exports = class Renderer {
+export default class ContainerRuleRenderer implements Renderer {
 
-    constructor(rule, parent = null) {
+    rule: ContainerRule
+    parent: Renderer
+    key: any
+    value: any
+    children: Array<Renderer>
+
+    constructor(rule: ContainerRule, parent: ContainerRuleRenderer = null) {
 
         Object.assign(this, {
-            root: parent && parent.root || this,
             parent,
             rule,
             key: rule.key,

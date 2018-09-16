@@ -1,48 +1,16 @@
-const {isArray, isObject, mapValues, size} = require('lodash');
-const Renderer = require('./Renderer');
+import {isArray, isObject, mapValues, size} from 'lodash';
+import Renderer from './Renderer';
+import PropertyRule from './PropertyRule';
 
-class Rule {
 
-    hook(name, ...args) {
 
-        for (let i = 0; i < this.options.plugins.length; i++) {
-            const plugin = this.options.plugins[i];
-            const res = plugin[name] && plugin[name](...args);
-            if (res) {
-                return res;
-            }
-        }
-    }
-}
-class PropertyRule extends Rule {
+export default class ContainerRule extends PropertyRule {
 
-    constructor(options, value, key, parent) {
+    options: any
+    args: Array<any>
+    rules: object
 
-        super();
-
-        this.key = key;
-        this.value = value;
-        this.options = options;
-        this.parent = parent;
-
-        this.hook('onCreate', this);
-
-    }
-
-    render(renderer) {
-        const res = `${this.key}:${this.value};`;
-        renderer.children.push(res);
-        return res;
-    }
-
-}
-
-class CallRule extends Rule {
-
-}
-class ContainerRule extends Rule {
-
-    constructor(options, data, key, parent) {
+    constructor(options, data, key = null, parent = null) {
 
         super(options, data, key, parent);
 

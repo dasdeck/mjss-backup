@@ -1,8 +1,8 @@
 
 /* eslint-env jest */
 
-const Rule = require('../src/Rule');
-const Exp = require('../src/plugins/Exp');
+import Sheet from '../src/Sheet';
+import Exp from '../src/plugins/Exp';
 
 [
     {
@@ -139,8 +139,9 @@ const Exp = require('../src/plugins/Exp');
 
     test(row.desc || row.css, () => {
 
+        debugger;
         const options = {plugins: [new Exp(row.opts)]};
-        const rule = new Rule(options, row.jss);
+        const rule = new Sheet(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 
     });

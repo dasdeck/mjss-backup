@@ -1,4 +1,4 @@
-const Rule = require('../Rule');
+import Rule from '../Rule';
 class MixinCall {
 
     constructor(rule, args, exp) {
@@ -16,7 +16,7 @@ class MixinCall {
     }
 }
 
-module.exports = class Exp {
+export default class Exp {
 
     constructor(options = {forceUniqueKeys: false}) {
         this.options = options;

@@ -1,8 +1,8 @@
 
 /* eslint-env jest */
 
-const Rule = require('../src/Rule');
-const Extend = require('../src/plugins/Extened');
+import Rule from '../src/Rule';
+import Extend from '../src/plugins/Extened';
 
 
 [

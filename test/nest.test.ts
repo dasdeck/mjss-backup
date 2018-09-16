@@ -1,8 +1,8 @@
 
 /* eslint-env jest */
 
-const Rule = require('../src/Rule');
-const Nest = require('../src/plugins/Nest');
+import Sheet from '../src/Sheet';
+import Nest from '../src/plugins/Nest';
 
 
 [
@@ -50,7 +50,7 @@ const Nest = require('../src/plugins/Nest');
             plugins: [new Nest]
         };
 
-        const rule = new Rule(options, row.jss);
+        const rule = new Sheet(options, row.jss);
         expect(rule.toString()).toBe(row.css);
 
     });

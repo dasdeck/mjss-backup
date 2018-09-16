@@ -45,11 +45,9 @@ class ExtendRule extends PropertyRule {
 
 }
 
-module.exports = class Extend {
+export default class Extend {
 
-    constructor() {
-        this.extends = [];
-    }
+    extends: Array<ExtendRule> = []
 
     createRule(options, rules, key) {
         if (startsWith(key, lookup)) {
