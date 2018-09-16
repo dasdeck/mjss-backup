@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "lint": "eslint *.js"
+    "lint": "eslint */*.js"
   },
   "author": "",
   "license": "MIT",

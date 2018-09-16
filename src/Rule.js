@@ -29,7 +29,7 @@ class Rule {
 
     hook(name, ...args) {
 
-        for(let i = 0; i < this.options.plugins.length; i++) {
+        for (let i = 0; i < this.options.plugins.length; i++) {
             const plugin = this.options.plugins[i];
             const res = plugin[name] && plugin[name](...args);
             if (res) {

@@ -35,7 +35,7 @@ module.exports = class Exp {
     }
 
     onCreate(rule) {
-        if (rule.parent) { //skip root rule
+        if (rule.parent) { // skip root rule
             const context = this.getContext();
             setExpression(rule, 'key', context);
             setExpression(rule, 'value', context);
@@ -87,7 +87,7 @@ function setExpression(rule, key, context) {
     const value = rule[key];
     if (value && isEvaluable(value)) {
         rule[`_exp_${key}`] = value;
-        Object.defineProperty(rule, key, { get: createExpression(value, context) });
+        Object.defineProperty(rule, key, {get: createExpression(value, context)});
     }
 }
 

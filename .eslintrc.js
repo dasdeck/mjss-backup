@@ -8,16 +8,26 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "no-multi-spaces": [
-            "error"
-        ],
-        "no-unused-vars": [
-            "error"
-        ],
+
+        //spaces
+        "indent": ["error", 4],
+        "no-multi-spaces": "error",
+        "array-bracket-spacing": "error",
+        "object-curly-spacing": "error",
+        "keyword-spacing": "error",
+        "semi-spacing": "error",
+        "spaced-comment": "error",
+        "space-unary-ops": "error",
+        "space-infix-ops": "error",
+        "space-in-parens": ["error", "never"],
+        "space-before-function-paren": ["error", "never"],
+        "space-before-blocks": "error",
+        "no-whitespace-before-property": "error",
+        "no-trailing-spaces": "error",
+        "block-spacing": "error",
+
+
+        "no-unused-vars": "error",
         "linebreak-style": [
             "error",
             "unix"

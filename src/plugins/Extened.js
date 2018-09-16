@@ -17,17 +17,18 @@ class ExtendRule extends Rule.Muted {
     }
 
     apply(renderer) {
+        // if(this.render){return this.render;}
 
-        if(renderer.key && renderer.key.match(this.search)) {
+        if (renderer.key && renderer.key.match(this.search)) {
             const selectors = renderer.key.split(', ');
             const selectorToAdd = this.parent.key;
             if (this.data.all) {
                 selectors.forEach(selector => {
-                    if(selector.match(this.search)) {
+                    if (selector.match(this.search)) {
                         selectors.push(selector.replace(this.className, selectorToAdd));
                     }
                 });
-            } else if(selectors.includes(this.className)) {
+            } else if (selectors.includes(this.className)) {
                 selectors.push(selectorToAdd);
             }
             renderer.key = selectors.join(', ');
@@ -52,7 +53,7 @@ module.exports = class Extend {
 
     onProcess(renderer) {
 
-        for(let i = 0; i < this.extends.length; i++) {
+        for (let i = 0; i < this.extends.length; i++) {
             const extend = this.extends[i];
             extend.apply(renderer);
         }

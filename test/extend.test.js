@@ -8,7 +8,7 @@ const Extend = require('../src/plugins/Extened');
 [
     {
         desc: 'extend',
-              jss: {
+        jss: {
             '.class:hover': {
                 'color': 'green'
             },

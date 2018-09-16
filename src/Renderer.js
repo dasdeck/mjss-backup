@@ -22,7 +22,7 @@ module.exports = class Renderer {
 
         this.rule.hook('onOutput', this);
 
-        if (this.children && this.children.length) { //render container rules (root, media, nested)
+        if (this.children && this.children.length) { // render container rules (root, media, nested)
 
             const ruleContent = this.children.map(info => info.toString()).join('');
 
@@ -32,7 +32,7 @@ module.exports = class Renderer {
                 return ruleContent;
             }
 
-        } else if (!isUndefined(this.value)) { //render end-rule or nothing if node is "empty"
+        } else if (!isUndefined(this.value)) { // render end-rule or nothing if node is "empty"
             return `${this.key}:${this.value};`;
         }
     }
