@@ -28,6 +28,17 @@ class EnvRule extends ContainerRule {
         return '';
     }
 }
+
+class DynamicRule extends ContainerRule {
+    render(renderer: ContainerRuleRenderer):Renderer {
+        const key = this.key;
+        if (key instanceof MixinCall) {
+            key.render(renderer);
+        } else if (key !== false) {
+            return super.render(renderer);
+        }
+    }
+}
 export default class Exp {
 
     stack: Array<any>
@@ -44,32 +55,19 @@ export default class Exp {
         }
     }
 
-    createRule(sheet, rules, key) {
+    createRule(sheet, rules, key, parent) {
         if (key === '@env') {
             this.env = new EnvRule(sheet, rules, '@env');
             return this.env;
+        } else if (isExpression(key)) {
+            return new DynamicRule(sheet, rules,key, parent)
         }
     }
 
     onCreate(rule) {
-        if (rule.key) { // skip root rule
-            const context = this.getContext();
-            setExpression(rule, 'key', context);
-            setExpression(rule, 'value', context);
-        }
-    }
-
-    onProcess(renderer) {
-
-        const rule = renderer.rule;
-        const key = rule && rule.key;
-
-        if (key === false) {
-            delete renderer.children;
-        } else if (key instanceof MixinCall) {
-            renderer.parent.children.pop();
-            key.render(renderer.parent);
-        }
+        const context = this.getContext();
+        setExpression(rule, 'key', context);
+        setExpression(rule, 'value', context);
     }
 
     forceUniqueKeys(renderer) {

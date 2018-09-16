@@ -13,9 +13,7 @@ export default class ContainerRule extends Rule {
 
     }
 
-
-
-    render(parentRenderer:ContainerRuleRenderer = null) {
+    render(parentRenderer:ContainerRuleRenderer = null):Renderer {
 
         const renderer = new ContainerRuleRenderer(this, parentRenderer);
 
