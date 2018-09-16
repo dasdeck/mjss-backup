@@ -3,7 +3,8 @@ const Rule = require('../Rule');
 
 const lookup = '@extend ';
 
-/* extend may fail if the parent key is changed by another plugin */
+/* extend may fail if the parent key is changed dynamically
+by another plugin (Exp will work fine though) */
 class ExtendRule extends Rule.Muted {
 
     constructor(...args) {
@@ -17,7 +18,6 @@ class ExtendRule extends Rule.Muted {
     }
 
     apply(renderer) {
-        // if(this.render){return this.render;}
 
         if (renderer.key && renderer.key.match(this.search)) {
             const selectors = renderer.key.split(', ');
@@ -33,6 +33,7 @@ class ExtendRule extends Rule.Muted {
             }
             renderer.key = selectors.join(', ');
         }
+
     }
 
 }
