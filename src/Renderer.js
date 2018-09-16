@@ -1,4 +1,4 @@
-const {isString, isUndefined} = require('lodash');
+const {isString} = require('lodash');
 
 module.exports = class Renderer {
 
@@ -32,8 +32,6 @@ module.exports = class Renderer {
                 return ruleContent;
             }
 
-        } else if (!isUndefined(this.value)) { // render end-rule or nothing if node is "empty"
-            return `${this.key}:${this.value};`;
         }
     }
 };

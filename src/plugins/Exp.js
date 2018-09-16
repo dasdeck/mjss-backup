@@ -35,7 +35,7 @@ module.exports = class Exp {
     }
 
     onCreate(rule) {
-        if (rule.parent) { // skip root rule
+        if (rule.key) { // skip root rule
             const context = this.getContext();
             setExpression(rule, 'key', context);
             setExpression(rule, 'value', context);
@@ -70,6 +70,7 @@ module.exports = class Exp {
         const self = this;
         return {
             arg(name) {
+                debugger
                 return self.stack[self.stack.length - 1][name];
             },
             env(name) {

@@ -19,10 +19,13 @@ class ExtendRule extends Rule.Muted {
 
     apply(renderer) {
 
+        if(!renderer) {
+            debugger
+        }
         if (renderer.key && renderer.key.match(this.search)) {
             const selectors = renderer.key.split(', ');
             const selectorToAdd = this.parent.key;
-            if (this.data.all) {
+            if (this.value.all) {
                 selectors.forEach(selector => {
                     if (selector.match(this.search)) {
                         selectors.push(selector.replace(this.className, selectorToAdd));

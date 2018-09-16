@@ -1,30 +1,21 @@
 const {isArray, isObject, mapValues, size} = require('lodash');
 const Renderer = require('./Renderer');
-class Rule {
 
-    constructor(options, data, key, parent) {
-
+class BasicRule {
+    constructor(options, value, key, parent) {
+        this.key = key;
+        this.value = value;
         this.options = options;
-        this.data = data;
-        this.key = key,
         this.parent = parent;
-
-        if (!isObject(data)) {
-            this.value = data;
-        } else if (isArray(data)) {
-            this.args = data;
-        } else if (size(data)) {
-            this.rules = mapValues(data, (row, key) => this.createRule(row, key));
-        }
 
         this.hook('onCreate', this);
 
     }
 
-    createRule(data, key) {
-
-        const rule = this.hook('createRule', this.options, data, key, this);
-        return rule || new Rule(this.options, data, key, this);
+    render(renderer) {
+        const res = `${this.key}:${this.value};`;
+        renderer.children.push(res);
+        return res;
     }
 
     hook(name, ...args) {
@@ -36,6 +27,34 @@ class Rule {
                 return res;
             }
         }
+    }
+
+};
+class Rule extends BasicRule {
+
+    constructor(options, data, key, parent) {
+
+        super(options, data, key, parent);
+
+        if (isArray(data)) {
+            this.args = data;
+        } else if (size(data)) {
+            this.rules = mapValues(data, (row, key) => this.createRule(row, key));
+        }
+
+    }
+
+    createRule(data, key) {
+
+        let rule = this.hook('createRule', this.options, data, key, this);
+        if (!rule) {
+            if (!isObject(data)) {
+                rule = new BasicRule(this.options, data, key, this);
+            } else {
+                rule = new Rule(this.options, data, key, this);
+            }
+        }
+        return rule;
     }
 
     rednerChildren(renderer) {
