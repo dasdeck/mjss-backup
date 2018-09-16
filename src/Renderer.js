@@ -5,6 +5,7 @@ module.exports = class Renderer {
     constructor(rule, parent = null) {
 
         Object.assign(this, {
+            root: parent && parent.root || this,
             parent,
             rule,
             key: rule.key,
