@@ -2,6 +2,7 @@ import ContainerRule from "../../ContainerRule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
 import MixinCall from "./MixinCall";
 import Exp from ".";
+import { isFunction } from "lodash";
 
 export default class EnvRule extends ContainerRule {
 
@@ -35,6 +36,7 @@ export default class EnvRule extends ContainerRule {
     getContext() {
         const self = this;
         return {
+            ...this.exp.options.context,
             arg(name) {
                 return self.stack[self.stack.length - 1][name];
             },
@@ -42,10 +44,10 @@ export default class EnvRule extends ContainerRule {
                 return self.get(name);
             },
             call(name, mixinArg = {}, ...args) {
-                const callable = self.get(name)
-                return callable instanceof ContainerRule ? new MixinCall(callable, mixinArg, self) : callable(mixinArg, ...args);
-            },
-            ...this.exp.options.context
+                const member = self.get(name)
+                return isFunction(member) ? member(mixinArg, ...args) : new MixinCall(member, mixinArg, self);
+            }
+
         };
     }
 

@@ -3,7 +3,6 @@ import EnvRule from './EnvRule';
 import {isEvaluable} from './lib';
 import DynamicContainerRule from './DynamicContainerRule';
 import DynamicRule from './DynamicRule';
-import MixinCall from './MixinCall';
 
 
 export default class Exp {

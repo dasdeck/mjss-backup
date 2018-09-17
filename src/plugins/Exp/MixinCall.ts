@@ -12,9 +12,17 @@ export default class MixinCall {
     args: Array<any>
     rule: ContainerRule
 
-    constructor(rule:ContainerRule, args:any, env: EnvRule) {
+    constructor(rule:ContainerRule|object, args:any, env: EnvRule) {
         this.exp = env.exp;
         this.env = env;
+        if (!(rule instanceof ContainerRule)) {
+            rule = env.rules.createRule(rule, '@mixin');
+
+            if (!(rule instanceof ContainerRule)) {
+                throw 'invalid mixin';
+            }
+
+        }
         this.rule = rule;
         this.args = args;
     }

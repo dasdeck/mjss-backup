@@ -7,7 +7,7 @@ import Rule from "../../Rule";
 import Exp from ".";
 import EnvRule from "./EnvRule";
 
-export default class DynamicContainer extends ContainerRule {
+export default class DynamicContainerRule extends ContainerRule {
 
     exp: Exp
     env: EnvRule
