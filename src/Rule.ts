@@ -2,8 +2,10 @@
 
 import Sheet from './Sheet';
 import RuleListRenderer from './RuleListRenderer';
+import Renderer from './interface/Renderer';
+import RuleRender from './RuleRenderer';
 
-export default class Rule {
+export default class Rule implements Renderer {
 
     sheet: Sheet
     parent: Rule
@@ -23,6 +25,8 @@ export default class Rule {
     }
 
     render(renderer: RuleListRenderer) {
-        const res = `${this.key}:${this.value};`;
-        renderer.children.push(res);
-    }}
+        renderer.children.push(new RuleRender(this));
+    }
+
+}
+

@@ -5,4 +5,4 @@ mjss is a json based css language to create highly dynamic and manageable css fr
 ## TODO
 
 [] lazy initialisation of @env rules?
-[] add explicit nest (&)
+[] optimize hook iteration

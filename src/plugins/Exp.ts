@@ -2,22 +2,35 @@ import {values, isPlainObject} from 'lodash';
 import ContainerRule from '../ContainerRule';
 import Rule from '../Rule';
 import ContainerRuleRenderer from '../ContainerRuleRenderer';
+import RuleListRenderer from '../RuleListRenderer';
+import RuleRender from '../RuleRenderer';
 class MixinCall {
 
     exp: Exp
     args: Array<any>
     rule: ContainerRule
 
-    constructor(rule, args, exp) {
+    constructor(rule:ContainerRule, args:any, exp:Exp) {
         this.exp = exp;
         this.rule = rule;
         this.args = args;
     }
 
-    render(renderer) {
+    render(renderer:ContainerRuleRenderer) {
+
         this.exp.stack.push(this.args);
+
         this.rule.rules.render(renderer);
-        renderer._exp_composed = true;
+
+        if (this.exp.options.forceUniqueKeys) {
+
+            const toString = renderer.toString;
+            renderer.toString = function() {
+                forceUniqueKeys(this);
+                return toString.call(this);
+            }
+        }
+
         this.exp.stack.pop();
 
     }
@@ -72,9 +85,7 @@ export default class Exp {
         this.stack = [];
 
 
-        if (this.options.forceUniqueKeys) {
-            this.onOutput = this.forceUniqueKeys;
-        }
+
     }
 
     createRule(sheet, rules, key, parent) {
@@ -89,16 +100,7 @@ export default class Exp {
     }
 
 
-    forceUniqueKeys(renderer) {
-        if (renderer._exp_composed) {
-            let i = 0;
-            renderer.children = values(renderer.children.reduce((last, next) => {
-                const key = next.children && next.children.length ? i++ : next.key;
-                last[key] = next;
-                return last;
-            }, {}));
-        }
-    }
+
 
     getContext() {
         const self = this;
@@ -116,6 +118,18 @@ export default class Exp {
     }
 
 };
+
+function forceUniqueKeys(renderer:ContainerRuleRenderer) {
+    let i = 0;
+    renderer.children = values(renderer.children.reduce((last, next) => {
+        if (next instanceof RuleRender) {
+            last[next.key] = next;
+        } else if(next instanceof ContainerRuleRenderer) { //containerRules can be double
+            last[i++] = next;
+        }
+        return last;
+    }, {}));
+}
 
 function setExpression(rule, key, context) {
     const value = rule[key];
