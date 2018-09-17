@@ -3,10 +3,11 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
+	"module": "js/es6/dist",
 	"scripts": {
 		"test": "jest --watchAll",
 		"lint": "eslint */*.ts",
-		"build": "tsc"
+		"build": "tsc -p tsconfig.es6.json"
 	},
 	"author": "",
 	"license": "MIT",

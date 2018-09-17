@@ -1,9 +1,13 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "es6",
-      "declaration": true,
-      "outDir": "./dist",
-      "strict": true
-    }
-  }
+  "compilerOptions": {
+    "module": "system",
+    "outFile": "dist/mjss.common.js",
+    "declaration": true,
+    "strict": false,
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "dist",
+    "test"
+  ]
+}
