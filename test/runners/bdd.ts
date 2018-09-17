@@ -1,7 +1,9 @@
 
-import * as suites from '.';
+import * as suites from '..';
 import {pickBy, isObject, forEach} from 'lodash';
-import Sheet from '../src/Sheet';
+import Sheet from '../../src/Sheet';
+
+/* generates test with bdd style commands */
 
 forEach(pickBy(suites, suite => isObject(suite) && suite.tests), (block:any, name) => {
 
@@ -9,7 +11,7 @@ forEach(pickBy(suites, suite => isObject(suite) && suite.tests), (block:any, nam
 
         block.tests.forEach(row => {
 
-            test(row.desc || row.css, () => {
+            it(row.desc || row.css, () => {
 
                 const options = block.options ? block.options(row) : {plugins: []};
 
