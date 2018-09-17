@@ -147,6 +147,38 @@ export default {
                 }
             },
             css: '.class{color:red;color:blue;}'
+        },
+        {
+            desc: 'add custom context',
+            opts: {
+                context: {
+                    var1: '10px',
+                    concat: (...args) => args.join('')
+                }
+            },
+            jss: {
+                '.class': {
+                    'width': "/env('var1')/",
+                    "color": "/concat('r', 'e', 'd')/"
+                }
+            },
+            css: '.class{width:10px;color:red;}'
+        },
+        {
+            desc: 'call function by call',
+            opts: {
+                context: {
+                    var1: '10px',
+                    concat: (...args) => args.join('')
+                }
+            },
+            jss: {
+                '.class': {
+                    'width': "/env('var1')/",
+                    "color": "/call('concat', 'r', 'e', 'd')/"
+                }
+            },
+            css: '.class{width:10px;color:red;}'
         }
     ]
 };

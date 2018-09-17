@@ -10,7 +10,11 @@ export default class ContainerRule extends Rule {
     constructor(sheet:Sheet, data:any, key:string = null, parent:Rule = null) {
 
         super(sheet, data, key, parent);
-        this.rules = new RuleList(sheet, data, this);
+        this.setRules(data);
+    }
+
+    setRules(data:any) {
+        this.rules = new RuleList(this.sheet, data, this);
 
     }
 

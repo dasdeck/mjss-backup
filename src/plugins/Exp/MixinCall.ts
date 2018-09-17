@@ -3,22 +3,25 @@ import Exp from ".";
 import ContainerRule from "../../ContainerRule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
 import RuleRender from "../../RuleRenderer";
+import EnvRule from "./EnvRule";
 
 export default class MixinCall {
 
+    env: EnvRule
     exp: Exp
     args: Array<any>
     rule: ContainerRule
 
-    constructor(rule:ContainerRule, args:any, exp:Exp) {
-        this.exp = exp;
+    constructor(rule:ContainerRule, args:any, env: EnvRule) {
+        this.exp = env.exp;
+        this.env = env;
         this.rule = rule;
         this.args = args;
     }
 
     render(renderer:ContainerRuleRenderer) {
 
-        this.exp.stack.push(this.args);
+        this.env.stack.push(this.args);
 
         this.rule.rules.render(renderer);
 
@@ -31,7 +34,7 @@ export default class MixinCall {
             }
         }
 
-        this.exp.stack.pop();
+        this.env.stack.pop();
 
     }
 }

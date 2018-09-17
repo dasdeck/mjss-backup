@@ -24,6 +24,8 @@ export default class Sheet {
 
     toString() {
 
+        this.hook('onInit', this);
+
         const list = new RuleList(this);
         const renderer = new RuleListRenderer(list);
 
