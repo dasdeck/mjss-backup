@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest --watchAll",
-		"lint": "eslint */*.js"
+		"lint": "eslint */*.ts"
 	},
 	"author": "",
 	"license": "MIT",
@@ -14,16 +14,24 @@
 	},
 	"devDependencies": {
 		"@types/jest": "^23.3.2",
+		"@types/lodash": "^4.14.116",
 		"eslint": "^5.6.0",
+		"eslint-plugin-typescript": "^0.12.0",
 		"jest": "^23.6.0",
 		"ts-jest": "^23.1.4",
-		"typescript": "^3.0.3"
+		"typescript": "^3.0.3",
+		"typescript-eslint-parser": "^18.0.0"
 	},
 	"jest": {
 		"transform": {
 			"^.+\\.ts?$": "ts-jest"
 		},
-		"testMatch": ["**/test/*.test.ts"],
-		"moduleFileExtensions": ["ts","js"]
+		"testMatch": [
+			"**/test/*.test.ts"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"js"
+		]
 	}
 }

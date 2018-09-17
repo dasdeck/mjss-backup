@@ -1,7 +1,4 @@
-import Renderer from './interface/Renderer';
 import ContainerRule from './ContainerRule';
-import {isString} from 'lodash';
-import Sheet from './Sheet';
 import RuleListRenderer from './RuleListRenderer';
 
 export default class ContainerRuleRenderer extends RuleListRenderer {
@@ -27,4 +24,4 @@ export default class ContainerRuleRenderer extends RuleListRenderer {
         return rulesCss && `${this.key}{${rulesCss}}`;
 
     }
-};
+}

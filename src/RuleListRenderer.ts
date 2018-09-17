@@ -1,6 +1,4 @@
 import Renderer from './interface/Renderer';
-import ContainerRule from './ContainerRule';
-import {isString} from 'lodash';
 import Sheet from './Sheet';
 import RuleList from './RuleList';
 
@@ -20,7 +18,7 @@ export default class RuleListRenderer implements Renderer {
             children: []
         });
 
-        if (parent) {
+        if(parent) {
             parent.children.push(this);
         }
     }
@@ -32,4 +30,4 @@ export default class RuleListRenderer implements Renderer {
         return this.children.map(v => v.toString()).filter(v => v).join('');
 
     }
-};
+}

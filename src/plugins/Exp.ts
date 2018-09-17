@@ -1,7 +1,7 @@
+import {values, isPlainObject} from 'lodash';
 import ContainerRule from '../ContainerRule';
 import Rule from '../Rule';
 import ContainerRuleRenderer from '../ContainerRuleRenderer';
-import {values, isPlainObject} from 'lodash';
 class MixinCall {
 
     exp: Exp
@@ -42,7 +42,6 @@ class DynamicRule extends Rule {
 class DynamicContainer extends ContainerRule {
 
     constructor(sheet, data, key, parent, exp) {
-        debugger
         super(sheet, data, key, parent);
 
         const context = exp.getContext();

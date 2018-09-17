@@ -1,5 +1,4 @@
 import RuleList from './RuleList';
-import ContainerRule from './ContainerRule';
 import RuleListRenderer from './RuleListRenderer';
 
 export default class Sheet {

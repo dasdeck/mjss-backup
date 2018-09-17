@@ -1,6 +1,5 @@
 import {startsWith} from 'lodash';
 import Rule from '../Rule';
-import Renderer from '../interface/Renderer';
 import ContainerRuleRenderer from '../ContainerRuleRenderer';
 
 const lookup = '@extend ';

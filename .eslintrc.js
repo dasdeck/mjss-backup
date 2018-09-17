@@ -1,12 +1,16 @@
 module.exports = {
 	"env": {
-		"node": true,
-		"commonjs": true,
+		"node": true
 	},
 	"parserOptions": {
-		"ecmaVersion": 6
+		"ecmaVersion": 6,
+		"sourceType": "module"
 	},
+	"parser": "typescript-eslint-parser",
 	"extends": "eslint:recommended",
+	"plugins": [
+        "typescript"
+    ],
 	"rules": {
 
 		//spaces
@@ -26,7 +30,8 @@ module.exports = {
 		"no-trailing-spaces": "error",
 		"block-spacing": "error",
 
-		"no-unused-vars": "error",
+		"no-undef": 0,
+		"typescript/no-unused-vars": "error",
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "single", { "avoidEscape": true }],
 		"semi": ["error", "always"]
