@@ -10,7 +10,6 @@ export default class Exp {
 
     stack: Array<any>
     options: any
-    onOutput: Function
     env: EnvRule
 
     constructor(options = {forceUniqueKeys: false}) {

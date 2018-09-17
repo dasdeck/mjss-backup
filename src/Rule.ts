@@ -2,10 +2,10 @@
 
 import Sheet from './Sheet';
 import RuleListRenderer from './RuleListRenderer';
-import Renderer from './interface/Renderer';
+import Renderable from './interface/Renderable';
 import RuleRender from './RuleRenderer';
 
-export default class Rule implements Renderer {
+export default class Rule implements Renderable {
 
     sheet: Sheet
     parent: Rule

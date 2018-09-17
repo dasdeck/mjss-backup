@@ -2,13 +2,19 @@ import ContainerRule from "../../ContainerRule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
 import {makeExpressive} from "./lib";
 import MixinCall from "./MixinCall";
+import Sheet from "../../Sheet";
+import Rule from "../../Rule";
+import Exp from ".";
 
 export default class DynamicContainer extends ContainerRule {
 
-    constructor(sheet, data, key, parent, exp) {
-        super(sheet, data, key, parent);
+    exp: Exp
 
-        const context = exp.getContext();
+    constructor(sheet:Sheet, data:any, key:string, parent:Rule, exp:Exp) {
+
+        super(sheet, data, key, parent);
+        this.exp = exp;
+        const context = this.exp.getContext();
 
         makeExpressive(this, 'key', context);
     }

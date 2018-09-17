@@ -1,10 +1,10 @@
 
 
 import Sheet from './Sheet';
-import Renderer from './interface/Renderer';
+import Renderable from './interface/Renderable';
 import Rule from './Rule';
 
-export default class RuleRender implements Renderer {
+export default class RuleRender implements Renderable {
 
     rule: Rule
     key: string

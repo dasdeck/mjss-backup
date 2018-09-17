@@ -1,7 +1,6 @@
-import ContainerRuleRenderer from "../ContainerRuleRenderer";
-import RuleListRenderer from "../RuleListRenderer";
+import ContainerRuleRenderer from "../../ContainerRuleRenderer";
+import { isContainer, reExplicitNest } from "./lib";
 
-const reExplicitNest = /&/g;
 export default class Nest {
 
     onProcess(renderer:ContainerRuleRenderer) {
@@ -30,10 +29,3 @@ export default class Nest {
     }
 };
 
-function isContainer(renderer:RuleListRenderer) {
-    if (!renderer.parent) {
-        return true;
-    } else if (renderer instanceof ContainerRuleRenderer) {
-        return renderer.rule.key.indexOf('@media') === 0;
-    }
-}
