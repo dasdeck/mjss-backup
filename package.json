@@ -27,7 +27,7 @@
 			"^.+\\.ts?$": "ts-jest"
 		},
 		"testMatch": [
-			"**/test/*.test.ts"
+			"**/test/jest.ts"
 		],
 		"moduleFileExtensions": [
 			"ts",
