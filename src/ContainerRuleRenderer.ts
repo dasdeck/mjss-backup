@@ -1,6 +1,6 @@
 import ContainerRule from './ContainerRule';
 import RuleListRenderer from './RuleListRenderer';
-
+import {assign} from 'lodash';
 export default class ContainerRuleRenderer extends RuleListRenderer {
 
     rule: ContainerRule
@@ -11,7 +11,7 @@ export default class ContainerRuleRenderer extends RuleListRenderer {
 
         super(rule.rules, parent);
 
-        Object.assign(this, {
+        assign(this, {
             rule,
             key: rule.key,
             value: rule.value
@@ -19,7 +19,6 @@ export default class ContainerRuleRenderer extends RuleListRenderer {
     }
 
     toString() {
-
         const rulesCss = super.toString();
         return rulesCss && `${this.key}{${rulesCss}}`;
 

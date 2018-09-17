@@ -1,6 +1,7 @@
 import Renderer from './interface/Renderer';
 import Sheet from './Sheet';
 import RuleList from './RuleList';
+import {assign} from 'lodash';
 
 export default class RuleListRenderer implements Renderer {
 
@@ -11,7 +12,7 @@ export default class RuleListRenderer implements Renderer {
 
     constructor(list: RuleList, parent: RuleListRenderer = null) {
 
-        Object.assign(this, {
+        assign(this, {
             sheet: list.sheet,
             parent,
             list,
@@ -26,7 +27,6 @@ export default class RuleListRenderer implements Renderer {
     toString() {
 
         this.sheet.hook('onOutput', this);
-
         return this.children.map(v => v.toString()).filter(v => v).join('');
 
     }

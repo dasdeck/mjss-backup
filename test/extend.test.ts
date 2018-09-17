@@ -2,7 +2,7 @@
 /* eslint-env jest */
 
 import Sheet from '../src/Sheet';
-import Extend from '../src/plugins/Extened';
+import Extend from '../src/plugins/Extend';
 
 
 [
