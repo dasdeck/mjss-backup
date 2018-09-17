@@ -1,1 +1,1 @@
-export const lookup = '@extend ';
+export const patternExtend = '@extend ';

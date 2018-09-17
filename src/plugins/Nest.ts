@@ -12,7 +12,6 @@ export default class Nest {
 
                 const pKeys = renderer.parent.key.split(', ');
                 const sKeys = renderer.key.split(', ');
-                const combinations = [];
                 const newKey = sKeys.map(sKey => {
                     return pKeys.map(pKey =>  {
                         const replaced = sKey.replace(reExplicitNest, pKey);
@@ -29,7 +28,6 @@ export default class Nest {
             }
         }
     }
-
 };
 
 function isContainer(renderer:RuleListRenderer) {

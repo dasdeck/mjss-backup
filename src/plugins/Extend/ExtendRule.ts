@@ -1,6 +1,6 @@
 import Rule from "../../Rule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
-import { lookup } from "./lib";
+import { patternExtend } from "./lib";
 
 export default class ExtendRule extends Rule {
 
@@ -9,7 +9,7 @@ export default class ExtendRule extends Rule {
 
     constructor(sheet, data, key, parent) {
         super(sheet, data, key, parent);
-        const className = this.key.substr(lookup.length);
+        const className = this.key.substr(patternExtend.length);
         const prefix = className[0] === '.' ? '.' : '';
         const search = className.substr(prefix.length);
         this.className = className;

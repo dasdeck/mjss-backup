@@ -19,7 +19,7 @@ export default class RuleListRenderer implements Renderer {
             children: []
         });
 
-        if(parent) {
+        if (parent) {
             parent.children.push(this);
         }
     }

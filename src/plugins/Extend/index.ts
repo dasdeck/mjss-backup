@@ -1,6 +1,6 @@
 import {startsWith} from 'lodash';
 import ExtendRule from './ExtendRule';
-import { lookup } from './lib';
+import {patternExtend} from './lib';
 
 
 /* extend may fail if the parent key is changed dynamically
@@ -13,7 +13,7 @@ export default class Extend {
     extends: Array<ExtendRule> = []
 
     createRule(sheet, rules, key, list) {
-        if (startsWith(key, lookup)) {
+        if (startsWith(key, patternExtend)) {
             const rule = new ExtendRule(sheet, rules, key, list.rule);
             this.extends.push(rule);
             return rule;
