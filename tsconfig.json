@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "system",
-    "outFile": "dist/mjss.common.js",
     "declaration": true,
     "strict": false,
     "moduleResolution": "node"
