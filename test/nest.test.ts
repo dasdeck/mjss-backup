@@ -55,6 +55,20 @@ import Nest from '../src/plugins/Nest';
         css: '.class .class2{color:red;}.class .class2 .class3{color:blue;}'
     },
     {
+        desc: 'explicit nest',
+        jss: {
+            '.class': {
+                '&.class2': {
+                    color: 'red',
+                    '& .class3': {
+                        color: 'blue'
+                    }
+                }
+            }
+        },
+        css: '.class.class2{color:red;}.class.class2 .class3{color:blue;}'
+    },
+    {
         desc: 'media query non nesting',
         jss: {
             '@media only screen and (max-width: 600px)': {

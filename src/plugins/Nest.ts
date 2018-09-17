@@ -1,6 +1,7 @@
 import ContainerRuleRenderer from "../ContainerRuleRenderer";
 import RuleListRenderer from "../RuleListRenderer";
 
+const reExplicitNest = /&/g;
 export default class Nest {
 
     onProcess(renderer:ContainerRuleRenderer) {
@@ -13,7 +14,10 @@ export default class Nest {
                 const sKeys = renderer.key.split(', ');
                 const combinations = [];
                 const newKey = sKeys.map(sKey => {
-                    return pKeys.map(pKey =>  `${pKey} ${sKey}`).join(', ')
+                    return pKeys.map(pKey =>  {
+                        const replaced = sKey.replace(reExplicitNest, pKey);
+                        return replaced !== sKey ? replaced : `${pKey} ${sKey}`;
+                    }).join(', ')
                 }).join(', ');
 
                 renderer.key = newKey;
