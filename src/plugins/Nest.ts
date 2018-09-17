@@ -9,7 +9,14 @@ export default class Nest {
 
             while (renderer.parent && !isContainer(renderer.parent)) {
 
-                renderer.key = `${renderer.parent.key} ${renderer.key}`;
+                const pKeys = renderer.parent.key.split(', ');
+                const sKeys = renderer.key.split(', ');
+                const combinations = [];
+                const newKey = sKeys.map(sKey => {
+                    return pKeys.map(pKey =>  `${pKey} ${sKey}`).join(', ')
+                }).join(', ');
+
+                renderer.key = newKey;
                 renderer = renderer.parent.children.pop();
                 renderer.parent = renderer.parent.parent;
 
