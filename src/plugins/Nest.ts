@@ -25,6 +25,6 @@ function isContainer(renderer:RuleListRenderer) {
     if (!renderer.parent) {
         return true;
     } else if (renderer instanceof ContainerRuleRenderer) {
-        return !renderer.rule.parent || renderer.rule.key.indexOf('@media') === 0;
+        return renderer.rule.key.indexOf('@media') === 0;
     }
 }

@@ -15,6 +15,18 @@ import Exp from '../src/plugins/Exp';
         css: '.class{color:black;}'
     },
     {
+        desc: 'template name with dynamic value',
+        jss: {
+            '@env': {
+                'color': 'black'
+            },
+            '`.class`': {
+                '`color`': "/env('color')/"
+            }
+        },
+        css: '.class{color:black;}'
+    },
+    {
         desc: 'global mixin',
         jss: {
             '@env': {

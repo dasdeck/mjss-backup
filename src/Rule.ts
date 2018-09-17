@@ -11,7 +11,7 @@ export default class Rule {
     key: any;
     value: any;
 
-    constructor(sheet, value, key, parent) {
+    constructor(sheet:Sheet, value:any, key:string, parent:Rule) {
 
         this.key = key;
         this.value = value;

@@ -2,11 +2,12 @@ import Rule from './Rule';
 import ContainerRuleRenderer from './ContainerRuleRenderer';
 import RuleList from './RuleList';
 import RuleListRenderer from './RuleListRenderer';
+import Sheet from './Sheet';
 export default class ContainerRule extends Rule {
 
     rules: RuleList
 
-    constructor(sheet, data, key = null, parent = null) {
+    constructor(sheet:Sheet, data:any, key:string = null, parent:Rule = null) {
 
         super(sheet, data, key, parent);
         this.rules = new RuleList(sheet, data, this);

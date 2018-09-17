@@ -1,7 +1,7 @@
 import ContainerRule from '../ContainerRule';
-import Renderer from '../interface/Renderer';
+import Rule from '../Rule';
 import ContainerRuleRenderer from '../ContainerRuleRenderer';
-import {values} from 'lodash';
+import {values, isPlainObject} from 'lodash';
 class MixinCall {
 
     exp: Exp
@@ -29,7 +29,26 @@ class EnvRule extends ContainerRule {
     }
 }
 
-class DynamicRule extends ContainerRule {
+class DynamicRule extends Rule {
+    constructor(sheet, data, key, parent, exp) {
+        super(sheet, data, key, parent);
+
+        const context = exp.getContext();
+
+        setExpression(this, 'key', context);
+        setExpression(this, 'value', context);
+    }
+}
+class DynamicContainer extends ContainerRule {
+
+    constructor(sheet, data, key, parent, exp) {
+        debugger
+        super(sheet, data, key, parent);
+
+        const context = exp.getContext();
+
+        setExpression(this, 'key', context);
+    }
     render(renderer: ContainerRuleRenderer) {
         const key = this.key;
         if (key instanceof MixinCall) {
@@ -38,6 +57,7 @@ class DynamicRule extends ContainerRule {
             this.rules.render(renderer);
         } else if (key !== false) {
             super.render(renderer);
+
         }
     }
 }
@@ -52,6 +72,7 @@ export default class Exp {
         this.options = options;
         this.stack = [];
 
+
         if (this.options.forceUniqueKeys) {
             this.onOutput = this.forceUniqueKeys;
         }
@@ -61,16 +82,13 @@ export default class Exp {
         if (key === '@env') {
             this.env = new EnvRule(sheet, rules, '@env');
             return this.env;
-        } else if (isExpression(key)) {
-            return new DynamicRule(sheet, rules,key, parent)
+        } else if (isEvaluable(key) && isPlainObject(rules)) {
+            return new DynamicContainer(sheet, rules, key, parent, this)
+        } else if (isEvaluable(key) || isEvaluable(rules)) {
+            return new DynamicRule(sheet, rules, key, parent, this)
         }
     }
 
-    onCreate(rule) {
-        const context = this.getContext();
-        setExpression(rule, 'key', context);
-        setExpression(rule, 'value', context);
-    }
 
     forceUniqueKeys(renderer) {
         if (renderer._exp_composed) {

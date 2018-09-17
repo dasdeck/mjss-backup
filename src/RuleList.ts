@@ -3,7 +3,6 @@ import ContainerRule from './ContainerRule';
 import Sheet from './Sheet';
 import Rule from './Rule';
 import RuleListRenderer from './RuleListRenderer';
-import Renderer from './interface/Renderer';
 
 export default class RuleList {
 
@@ -12,7 +11,7 @@ export default class RuleList {
     rules: object
     rule: Rule
 
-    constructor(sheet, data = sheet.data, rule = null) {
+    constructor(sheet:Sheet, data:any = sheet.data, rule:Rule = null) {
 
         this.sheet = sheet;
         this.rule = rule;
@@ -22,14 +21,14 @@ export default class RuleList {
 
     }
 
-    createRule(data, key) {
+    createRule(data:any, key:string) {
 
         let rule = this.sheet.hook('createRule', this.sheet, data, key, this);
         if (!rule) {
             if (!isObject(data)) {
                 rule = new Rule(this.sheet, data, key, this);
             } else {
-                rule = new ContainerRule(this.sheet, data, key, this);
+                rule = new ContainerRule(this.sheet, data, key, this.rule);
             }
         }
         return rule;
@@ -40,7 +39,6 @@ export default class RuleList {
             const rule = this.rules[key];
             rule.render(renderer);
         }
-        return renderer;
     }
 
 

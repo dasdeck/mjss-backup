@@ -6,7 +6,10 @@ import ContainerRuleRenderer from '../ContainerRuleRenderer';
 const lookup = '@extend ';
 
 /* extend may fail if the parent key is changed dynamically
-by another plugin (Exp will work fine though) */
+by another plugin (Exp will work fine though)
+possible fix: store renderers of extend nodes to evaluate real parents
+*/
+
 class ExtendRule extends Rule {
 
     className: string
