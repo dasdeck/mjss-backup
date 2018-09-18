@@ -13,6 +13,7 @@ export default class Nest {
                 const sKeys = renderer.key.split(', ');
                 const newKey = sKeys.map(sKey => {
                     return pKeys.map(pKey =>  {
+
                         const replaced = sKey.replace(reExplicitNest, pKey);
                         return replaced !== sKey ? replaced : `${pKey} ${sKey}`;
                     }).join(', ')

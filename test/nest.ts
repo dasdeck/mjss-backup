@@ -93,6 +93,20 @@ export default {
             },
             css: '@media only screen and (max-width: 600px){.class1 .class2{color:black;}}'
         },
+        {
+            desc: 'nesting in key frames',
+            jss: {
+                '@keyframes .class': {
+                    '0%': {
+                        'color': 'red'
+                    },
+                    '100%': {
+                        'color': 'green'
+                    }
+                }
+            },
+            css: '@keyframes .class{0%{color:red;}100%{color:green;}}'
+        },
 
     ]
 };

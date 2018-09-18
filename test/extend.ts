@@ -32,13 +32,32 @@ export default {
                     'color': 'blue'
                 },
                 '.class1': {
-                    '@extend .class': {
-                        all: true
-                    },
+                    '@extend .class': {all: true},
                     'color': 'black'
                 }
             },
             css: '.class:hover, .class1:hover{color:red;}.class, .class1{color:blue;}.class1{color:black;}'
+        },
+        {
+            desc: 'extend extended',
+            jss: {
+                '.target': {
+                    color: 'red'
+                  },
+
+                  '.extender1': {
+                    '@extend .extender2': {},
+                    'color': 'red'
+                  },
+
+                  '.extender2': {
+                    '@extend .target': {},
+                    'color': 'red'
+                  }
+
+
+            },
+            css: '.target, .extender2, .extender1{color:red;}.extender1{color:red;}.extender2, .extender1{color:red;}'
         }
     ]
 };

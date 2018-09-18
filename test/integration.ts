@@ -3,7 +3,11 @@ import Exp from '../src/plugins/Exp';
 import Nest from '../src/plugins/Nest';
 
 export default {
-    options: (test) => ({plugins: [new Exp, new Extend, new Nest]}),
+    options: (test) => ({plugins: [
+        new Exp,
+        new Nest,
+        new Extend,
+    ]}),
     tests: [
         {
             desc: 'test Extend can handle dynamic rules',
@@ -23,6 +27,52 @@ export default {
                 }
             },
             css: '.class1{height:10px;}.class, .class1{color:red;width:10px;}'
+        },
+        {
+            desc: 'use extend from conditional parent (true)',
+            jss: {
+                '.targetClass': {
+                    'color': 'red'
+                },
+                '.extenderClass': {
+                    "/true/": {
+                        '@extend .targetClass': {},
+                        'width': '20px'
+                    }
+                }
+            },
+            css: '.targetClass, .extenderClass{color:red;}.extenderClass{width:20px;}'
+        },
+        {
+            desc: 'use extend from conditional parent (false)',
+            jss: {
+                '.targetClass': {
+                    'color': 'red'
+                },
+                '.extenderClass': {
+                    "/false/": {
+                        '@extend .targetClass': {},
+                        'width': '20px'
+                    }
+                }
+            },
+            css: '.targetClass{color:red;}'
+        },
+        {
+            desc: 'extend and nested',
+            jss: {
+                '.target': {
+                    'color': 'black',
+                    '&:hover': {
+                        'color': 'green'
+                    },
+                },
+                '.extender': {
+                    '@extend .target': {all:true},
+                    'color': 'red'
+                }
+            },
+            css: '.target, .extender{color:black;}.target:hover, .extender:hover{color:green;}.extender{color:red;}'
         }
     ]
 }

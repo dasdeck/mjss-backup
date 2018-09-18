@@ -3,9 +3,10 @@ import ExtendRule from './ExtendRule';
 import {patternExtend} from './lib';
 
 
-/* extend may fail if the parent key is changed dynamically
-by another plugin (Exp will work fine though)
-possible fix: store renderers of extend nodes to evaluate real parents
+/*
+extend may set the result key to a renderable object because it needs to be lazy
+to ensure it extends target rules with its final parent
+make shure not to midify keys after they have been extended
 */
 
 export default class Extend {
