@@ -158,8 +158,38 @@ export default {
             },
             jss: {
                 '.class': {
-                    'width': "/env('var1')/",
+                    'width': "/var1/",
                     "color": "/concat('r', 'e', 'd')/"
+                }
+            },
+            css: '.class{width:10px;color:red;}'
+        },
+        {
+            desc: 'return mixin from function',
+            opts: {
+                env: {
+                    var1: '10px',
+                    myMixin: () => ({color: 'red'})
+                }
+            },
+            jss: {
+                '.class': {
+                    'width': "/env('var1')/",
+                    "/call('myMixin')/": {}
+                }
+            },
+            css: '.class{width:10px;color:red;}'
+        },
+        {
+            desc: 'define function in env',
+            jss: {
+                '@env': {
+                    myMixin: () => ({color: 'red'}),
+                    var1: '10px'
+                },
+                '.class': {
+                    'width': "/env('var1')/",
+                    "/call('myMixin')/": {}
                 }
             },
             css: '.class{width:10px;color:red;}'
@@ -168,6 +198,24 @@ export default {
             desc: 'call function by call',
             opts: {
                 context: {
+                    var1: '10px',
+                },
+                env: {
+                    concat: (...args) => args.join('')
+                }
+            },
+            jss: {
+                '.class': {
+                    'width': "/var1/",
+                    "color": "/call('concat', 'r', 'e', 'd')/"
+                }
+            },
+            css: '.class{width:10px;color:red;}'
+        },
+        {
+            desc: 'env in options',
+            opts: {
+                env: {
                     var1: '10px',
                     concat: (...args) => args.join('')
                 }

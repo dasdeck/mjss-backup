@@ -2,7 +2,7 @@ import ContainerRule from "../../ContainerRule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
 import MixinCall from "./MixinCall";
 import Exp from ".";
-import { isFunction } from "lodash";
+import { isFunction, isObject } from "lodash";
 
 export default class EnvRule extends ContainerRule {
 
@@ -25,8 +25,8 @@ export default class EnvRule extends ContainerRule {
     }
 
     get(key) {
-        if (this.exp.options.context && key in this.exp.options.context) {
-            return this.exp.options.context[key];
+        if (this.exp.options.env && key in this.exp.options.env) {
+            return this.exp.options.env[key];
         } else if (key in this.rules.rules) {
             const rule = this.rules.rules[key]
             return rule instanceof ContainerRule ? rule : rule.value;
@@ -44,8 +44,11 @@ export default class EnvRule extends ContainerRule {
                 return self.get(name);
             },
             call(name, mixinArg = {}, ...args) {
-                const member = self.get(name)
-                return isFunction(member) ? member(mixinArg, ...args) : new MixinCall(member, mixinArg, self);
+                let member = self.get(name)
+                while (isFunction(member)) {
+                    member = member(mixinArg, ...args);
+                }
+                return isObject(member) ? new MixinCall(member, mixinArg, self) : member;
             }
 
         };

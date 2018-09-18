@@ -1,4 +1,4 @@
-import {isObject, mapValues} from 'lodash';
+import {isObject, mapValues, isFunction} from 'lodash';
 import ContainerRule from './ContainerRule';
 import Sheet from './Sheet';
 import Rule from './Rule';
@@ -25,7 +25,7 @@ export default class RuleList {
 
         let rule = this.sheet.hook('createRule', this.sheet, data, key, this);
         if (!rule) {
-            if (!isObject(data)) {
+            if (!isObject(data) || isFunction(data)) {
                 rule = new Rule(this.sheet, data, key, this.rule);
             } else {
                 rule = new ContainerRule(this.sheet, data, key, this.rule);
