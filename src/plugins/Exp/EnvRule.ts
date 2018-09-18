@@ -14,10 +14,11 @@ export default class EnvRule extends ContainerRule {
         super(sheet, {}, '@env'); // pass empty data to avoid loading rules immediatly
         this.exp = exp;
 
+        this.createContext();
 
         this.exp.env = this;
         // load rules after setting exp.env member
-        this.setRules(data);
+        this.setRules({...data, ...exp.options.env});
     }
 
     render(renderer: ContainerRuleRenderer) {
@@ -25,17 +26,15 @@ export default class EnvRule extends ContainerRule {
     }
 
     get(key) {
-        if (this.exp.options.env && key in this.exp.options.env) {
-            return this.exp.options.env[key];
-        } else if (key in this.rules.rules) {
+        if (key in this.rules.rules) {
             const rule = this.rules.rules[key]
             return rule instanceof ContainerRule ? rule : rule.value;
         }
     }
 
-    getContext() {
+    createContext(){
         const self = this;
-        return {
+        this.context = {
             ...this.exp.options.context,
             arg(name) {
                 return self.stack[self.stack.length - 1][name];
@@ -52,6 +51,10 @@ export default class EnvRule extends ContainerRule {
             }
 
         };
+    }
+
+    getContext() {
+        return this.context;
     }
 
 }

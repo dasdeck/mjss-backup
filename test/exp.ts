@@ -211,22 +211,6 @@ export default {
                 }
             },
             css: '.class{width:10px;color:red;}'
-        },
-        {
-            desc: 'env in options',
-            opts: {
-                env: {
-                    var1: '10px',
-                    concat: (...args) => args.join('')
-                }
-            },
-            jss: {
-                '.class': {
-                    'width': "/env('var1')/",
-                    "color": "/call('concat', 'r', 'e', 'd')/"
-                }
-            },
-            css: '.class{width:10px;color:red;}'
         }
     ]
 };
