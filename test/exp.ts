@@ -211,6 +211,31 @@ export default {
                 }
             },
             css: '.class{width:10px;color:red;}'
+        },
+        {
+            desc: 'change env from external',
+            test(sheet, actions) {
+
+                const exp = sheet.options.plugins[0];
+
+                actions.compare(sheet.toString(), this.css);
+                exp.options.env = exp.options.env || {};
+                exp.options.env['var1'] = '20px';
+                actions.compare(sheet.toString(), this.css2);
+                exp.options.env = {};
+                actions.compare(sheet.toString(), this.css);
+
+            },
+            jss: {
+                '@env': {
+                    var1: '10px'
+                },
+                '.class': {
+                    'width': "/env('var1')/",
+                }
+            },
+            css: '.class{width:10px;}',
+            css2: '.class{width:20px;}'
         }
     ]
 };

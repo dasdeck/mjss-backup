@@ -7,6 +7,7 @@ import Sheet from '../../src/Sheet';
 
 forEach(pickBy(suites, suite => isObject(suite) && suite.tests), (block:any, name) => {
 
+    const compare = (a, b) => expect(a).toBe(b);
     describe(name, () => {
 
         block.tests.forEach(row => {
@@ -14,9 +15,14 @@ forEach(pickBy(suites, suite => isObject(suite) && suite.tests), (block:any, nam
             it(row.desc || row.css, () => {
 
                 const options = block.options ? block.options(row) : {plugins: []};
+                const sheet = new Sheet(options, row.jss);
+                if (row.test) {
 
-                const rule = new Sheet(options, row.jss);
-                expect(rule.toString()).toBe(row.css);
+                    row.test(sheet, {compare})
+                } else {
+                    compare(sheet.toString(), row.css)
+                }
+
 
             });
 

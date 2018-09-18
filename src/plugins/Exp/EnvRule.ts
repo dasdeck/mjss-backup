@@ -18,7 +18,7 @@ export default class EnvRule extends ContainerRule {
 
         this.exp.env = this;
         // load rules after setting exp.env member
-        this.setRules({...data, ...exp.options.env});
+        this.setRules(data);
     }
 
     render(renderer: ContainerRuleRenderer) {
@@ -26,7 +26,10 @@ export default class EnvRule extends ContainerRule {
     }
 
     get(key) {
-        if (key in this.rules.rules) {
+
+        if (this.exp.options.env && key in this.exp.options.env) {
+            return this.exp.options.env[key]
+        } else if (key in this.rules.rules) {
             const rule = this.rules.rules[key]
             return rule instanceof ContainerRule ? rule : rule.value;
         }
