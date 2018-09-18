@@ -3,6 +3,7 @@ import ContainerRuleRenderer from './ContainerRuleRenderer';
 import RuleList from './RuleList';
 import RuleListRenderer from './RuleListRenderer';
 import Sheet from './Sheet';
+import Renderable from './interface/Renderable';
 export default class ContainerRule extends Rule {
 
     rules: RuleList

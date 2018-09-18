@@ -9,6 +9,9 @@ export default class Sheet {
     constructor(options: any, data = {}) {
         this.options = options;
         this.data = data;
+
+        this.hook('onInit', this);
+
     }
 
     hook(name, ...args) {
@@ -23,8 +26,6 @@ export default class Sheet {
     }
 
     toString() {
-
-        this.hook('onInit', this);
 
         const list = new RuleList(this);
         const renderer = new RuleListRenderer(list);

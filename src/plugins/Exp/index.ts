@@ -16,7 +16,6 @@ export default class Exp {
 
     onInit(sheet) {
         this.env = new EnvRule(sheet, this, sheet.data['@env']);
-
     }
 
     createRule(sheet, rules, key, parent) {

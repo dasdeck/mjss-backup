@@ -16,7 +16,6 @@ export default class MixinCall {
         this.exp = env.exp;
         this.env = env;
         if (!(rule instanceof ContainerRule)) {
-            debugger
             rule = env.rules.createRule(rule, '@mixin');
 
             if (!(rule instanceof ContainerRule)) {
