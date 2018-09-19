@@ -7,6 +7,7 @@ export default class ExtendRule extends Rule {
 
     className: string
     search: RegExp
+    replace: RegExp
     currentParrent: ContainerRuleRenderer
     transformations: Array<Function> = []
 
@@ -18,10 +19,12 @@ export default class ExtendRule extends Rule {
         const search = className.substr(prefix.length);
         this.className = className;
         if (this.value.all) {
-            this.search = new RegExp(/prefix(?:\b)search(?:\b[^-]|$)/g.source.replace('prefix', prefix).replace('search', search), 'g');
+            this.search = new RegExp(/prefix(?:\b)search(?:\b[^-]|$)/g.source.replace('prefix', prefix).replace('search', search));
         } else {
-            this.search = new RegExp(/(?:,|^)\s*prefix(?:\b)search(?:\b\s*(?:,|$))/g.source.replace('prefix', prefix).replace('search', search), 'g');
+            this.search = new RegExp(/(?:,|^)\s*prefix(?:\b)search(?:\b\s*(?:,|$))/g.source.replace('prefix', prefix).replace('search', search));
         }
+        this.replace  = new RegExp(this.search.source, 'g');
+
 
     }
 
@@ -36,7 +39,9 @@ export default class ExtendRule extends Rule {
     }
 
     apply() {
+        // console.log({trans: this.transformations.length, selector: this.getTargetSelector()});
         this.transformations.forEach(t => t());
+        this.transformations = [];
     }
 
     collect(renderer) {

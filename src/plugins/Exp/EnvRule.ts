@@ -2,7 +2,8 @@ import ContainerRule from "../../ContainerRule";
 import ContainerRuleRenderer from "../../ContainerRuleRenderer";
 import MixinCall from "./MixinCall";
 import Exp from ".";
-import { isFunction, isObject } from "lodash";
+import { isFunction, isPlainObject } from "lodash";
+import Rule from "../../Rule";
 
 export default class EnvRule extends ContainerRule {
 
@@ -49,7 +50,7 @@ export default class EnvRule extends ContainerRule {
                 while (isFunction(member)) {
                     member = member(mixinArg, ...args);
                 }
-                return isObject(member) ? new MixinCall(member, mixinArg, self) : member;
+                return member instanceof Rule || isPlainObject(member) ? new MixinCall(member, mixinArg, self) : member;
             }
 
         };

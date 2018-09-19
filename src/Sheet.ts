@@ -5,6 +5,7 @@ export default class Sheet {
 
     options: any
     data: any
+    rules: RuleList
 
     constructor(options: any, data = {}) {
         this.options = options;
@@ -12,7 +13,11 @@ export default class Sheet {
 
         this.hook('onInit', this);
 
+        this.rules = new RuleList(this);
+
+
     }
+
 
     hook(name, ...args) {
 
@@ -27,10 +32,9 @@ export default class Sheet {
 
     toString() {
 
-        const list = new RuleList(this);
-        const renderer = new RuleListRenderer(list);
+        const renderer = new RuleListRenderer(this.rules);
         this.hook('onBeforeRender', renderer);
-        list.render(renderer);
+        this.rules.render(renderer);
         this.hook('onBeforeOutput', renderer);
         return renderer.toString();
 
