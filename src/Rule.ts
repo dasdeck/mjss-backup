@@ -26,7 +26,7 @@ export default class Rule implements Renderable {
 
     render(renderer: RuleListRenderer) {
 
-        const ruleRenderer = new RuleRender(this);
+        const ruleRenderer = new RuleRender(this, renderer);
         this.sheet.hook('onProcess', ruleRenderer);
         renderer.children.push(ruleRenderer);
     }

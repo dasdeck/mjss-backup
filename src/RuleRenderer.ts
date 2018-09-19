@@ -3,6 +3,7 @@
 import Sheet from './Sheet';
 import Renderable from './interface/Renderable';
 import Rule from './Rule';
+import RuleListRenderer from './RuleListRenderer';
 
 export default class RuleRender implements Renderable {
 
@@ -10,9 +11,11 @@ export default class RuleRender implements Renderable {
     key: string
     value: string
     sheet: Sheet
+    parent: RuleListRenderer
 
-    constructor(rule:Rule) {
+    constructor(rule:Rule, parent: RuleListRenderer) {
 
+        this.parent = parent;
         this.sheet = rule.sheet;
         this.rule = rule;
         this.key = rule.key;
