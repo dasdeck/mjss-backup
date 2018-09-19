@@ -1,20 +1,4 @@
-const nativeFunctions = [
-    'calc',
-    'linear-gradient',
-    'rgba',
-    'url',
-    'blur',
-    'translate',
-    'rotate',
-    'translateY',
-    'translateX',
-    'attr',
-    'scale',
-    'translate3d',
-    'translateZ',
-    'scale3d'
-];
-
+import {nativeFunctions} from 'mjss-css-utils';
 export default class Cleanup {
 
     onOutput(renderer) {
