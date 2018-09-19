@@ -107,7 +107,7 @@ export default {
             jss: {
                 '@env': {
                     mixin: {
-                        color: "/arg('color')/"
+                        color: "/env('color')/"
                     },
                 },
                 '.class': {
@@ -122,7 +122,7 @@ export default {
             jss: {
                 '@env': {
                     mixin: {
-                        color: "/arg('color')/"
+                        color: "/env('color')/"
                     },
                 },
                 '.class': {
@@ -138,7 +138,7 @@ export default {
             jss: {
                 '@env': {
                     mixin: {
-                        color: "/arg('color')/"
+                        color: "/env('color')/"
                     },
                 },
                 '.class': {

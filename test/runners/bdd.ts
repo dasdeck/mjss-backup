@@ -10,9 +10,9 @@ forEach(pickBy(suites, suite => isObject(suite) && suite.tests), (block:any, nam
     const compare = (a, b) => expect(a).toBe(b);
     describe(name, () => {
 
-        block.tests.forEach(row => {
+        forEach(block.tests, (row, desc) => {
 
-            it(row.desc || row.css, () => {
+            it(row.desc || desc || row.css, () => {
 
                 const options = block.options ? block.options(row) : {plugins: []};
                 const sheet = new Sheet(options, row.jss);

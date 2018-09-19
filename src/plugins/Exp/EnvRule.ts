@@ -26,8 +26,10 @@ export default class EnvRule extends ContainerRule {
     }
 
     get(key) {
-
-        if (this.exp.options.env && key in this.exp.options.env) {
+        const stack = this.stack[this.stack.length - 1];
+        if (stack && key in stack) {
+            return stack[key];
+        } else if (this.exp.options.env && key in this.exp.options.env) {
             return this.exp.options.env[key]
         } else if (key in this.rules.rules) {
             const rule = this.rules.rules[key]
@@ -39,9 +41,6 @@ export default class EnvRule extends ContainerRule {
         const self = this;
         this.context = {
             ...this.exp.options.context,
-            arg(name) {
-                return self.stack[self.stack.length - 1][name];
-            },
             env(name) {
                 return self.get(name);
             },

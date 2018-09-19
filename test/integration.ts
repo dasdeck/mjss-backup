@@ -8,9 +8,8 @@ export default {
         new Nest,
         new Extend,
     ]}),
-    tests: [
-        {
-            desc: 'test Extend can handle dynamic rules',
+    tests: {
+        'test Extend can handle dynamic rules': {
             jss: {
                 '@env': {
                     mixin: {
@@ -28,8 +27,7 @@ export default {
             },
             css: '.class1{height:10px;}.class, .class1{color:red;width:10px;}'
         },
-        {
-            desc: 'use extend from conditional parent (true)',
+        'use extend from conditional parent (true)': {
             jss: {
                 '.targetClass': {
                     'color': 'red'
@@ -43,8 +41,7 @@ export default {
             },
             css: '.targetClass, .extenderClass{color:red;}.extenderClass{width:20px;}'
         },
-        {
-            desc: 'use extend from conditional parent (false)',
+        'use extend from conditional parent (false)': {
             jss: {
                 '.targetClass': {
                     'color': 'red'
@@ -58,8 +55,7 @@ export default {
             },
             css: '.targetClass{color:red;}'
         },
-        {
-            desc: 'extend and nested',
+        'extend and nested': {
             jss: {
                 '.target': {
                     'color': 'black',
@@ -74,5 +70,5 @@ export default {
             },
             css: '.target, .extender{color:black;}.target:hover, .extender:hover{color:green;}.extender{color:red;}'
         }
-    ]
+    }
 }
