@@ -25,7 +25,16 @@ export default class Extend {
 
         for (let i = 0; i < this.extends.length; i++) {
             const extend = this.extends[i];
-            extend.apply(renderer);
+            extend.collect(renderer);
+        }
+
+    }
+
+    onBeforeOutput() {
+
+        for (let i = 0; i < this.extends.length; i++) {
+            const extend = this.extends[i];
+            extend.apply();
         }
 
     }

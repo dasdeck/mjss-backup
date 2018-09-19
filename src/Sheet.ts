@@ -29,9 +29,10 @@ export default class Sheet {
 
         const list = new RuleList(this);
         const renderer = new RuleListRenderer(list);
-
+        this.hook('onBeforeRender', renderer);
         list.render(renderer);
-
+        debugger
+        this.hook('onBeforeOutput', renderer);
         return renderer.toString();
 
     }

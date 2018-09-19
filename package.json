@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"module": "dist/es6",
 	"scripts": {
-		"test": "jest --watchAll",
+		"test": "jest",
 		"lint": "eslint */*.ts",
 		"build": "tsc -p tsconfig.es6.json"
 	},
